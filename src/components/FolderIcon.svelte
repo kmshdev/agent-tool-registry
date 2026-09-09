@@ -1,0 +1,10 @@
+<script lang="ts">
+  import WorkIcon from './WorkIcon.svelte';
+  let {name}:{name:string}=$props();
+  const labels:Record<string,string>={all:'ALL',cli:'SH',brew:'PKG',agents:'MD',apps:'APP',github:'GIT'};
+</script>
+<span class="folder-icon" aria-hidden="true"><span class="folder-back"></span><span class="file-paper paper-back"></span><span class="file-paper paper-front"><span>{labels[name]??'FILE'}</span></span><span class="folder-front"><WorkIcon {name} size={18}/></span></span>
+<style>
+.folder-icon{display:block;position:relative;width:36px;height:34px;perspective:120px;color:var(--source-color,#72b1bf)}.folder-back{position:absolute;inset:8px 0 0;border:1px solid currentColor;border-radius:3px;background:color-mix(in srgb,currentColor 18%,#082234)}.folder-back:before{content:'';position:absolute;left:0;top:-5px;width:14px;height:5px;border:1px solid currentColor;border-bottom:0;border-radius:3px 3px 0 0;background:inherit}.file-paper{position:absolute;left:5px;right:5px;top:7px;height:23px;background:#aac4d0;border:1px solid #618797;border-radius:2px;transition:transform .2s ease-out}.paper-back{transform:rotate(-7deg)}.paper-front span{display:block;background:#092739;color:#88d8ce;font:var(--type-10) Berkeley Mono,monospace;margin:3px;padding:1px;text-align:center}.folder-front{position:absolute;inset:13px 0 0;border:1px solid currentColor;border-radius:3px;background:color-mix(in srgb,currentColor 24%,#082234);backdrop-filter:blur(3px);display:grid;place-items:center;transform-origin:bottom;transition:transform .2s ease-out}.folder-front :global(svg){width:16px;height:16px}.folder-icon:global(:where(button:hover,button:focus-visible) .folder-icon) .paper-back{transform:translate(-3px,-8px) rotate(-15deg)}.folder-icon:global(:where(button:hover,button:focus-visible) .folder-icon) .paper-front{transform:translate(2px,-6px) rotate(9deg)}.folder-icon:global(:where(button:hover,button:focus-visible) .folder-icon) .folder-front{transform:rotateX(-30deg)}
+@media(prefers-reduced-motion:reduce){.file-paper,.folder-front{transition:none}}
+</style>

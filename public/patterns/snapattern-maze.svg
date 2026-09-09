@@ -1,0 +1,544 @@
+<svg width="500" height="450" viewBox="0 0 500 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_14_63706)">
+<path d="M52.321 -2.3208L-2.32101 52.3213" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip1_14_63706)">
+<path d="M102.321 52.3208L47.679 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip2_14_63706)">
+<path d="M152.321 52.3208L97.679 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip3_14_63706)">
+<path d="M147.679 -2.3208L202.321 52.3213" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip4_14_63706)">
+<path d="M197.679 -2.3208L252.321 52.3213" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip5_14_63706)">
+<path d="M247.679 52.3208L302.321 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip6_14_63706)">
+<path d="M297.679 52.3208L352.321 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip7_14_63706)">
+<path d="M402.321 52.3208L347.679 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip8_14_63706)">
+<path d="M397.679 -2.3208L452.321 52.3213" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip9_14_63706)">
+<path d="M502.321 52.3208L447.679 -2.32125" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip10_14_63706)">
+<path d="M-2.32104 47.6792L52.321 102.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip11_14_63706)">
+<path d="M102.321 102.321L47.679 47.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip12_14_63706)">
+<path d="M97.679 47.6792L152.321 102.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip13_14_63706)">
+<path d="M202.321 102.321L147.679 47.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip14_14_63706)">
+<path d="M252.321 47.6792L197.679 102.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip15_14_63706)">
+<path d="M302.321 47.6792L247.679 102.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip16_14_63706)">
+<path d="M297.679 102.321L352.321 47.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip17_14_63706)">
+<path d="M347.679 47.6792L402.321 102.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip18_14_63706)">
+<path d="M397.679 102.321L452.321 47.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip19_14_63706)">
+<path d="M502.321 102.321L447.679 47.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip20_14_63706)">
+<path d="M-2.32104 97.6792L52.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip21_14_63706)">
+<path d="M47.679 97.6792L102.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip22_14_63706)">
+<path d="M152.321 152.321L97.679 97.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip23_14_63706)">
+<path d="M147.679 152.321L202.321 97.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip24_14_63706)">
+<path d="M197.679 97.6792L252.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip25_14_63706)">
+<path d="M247.679 97.6792L302.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip26_14_63706)">
+<path d="M297.679 97.6792L352.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip27_14_63706)">
+<path d="M347.679 97.6792L402.321 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip28_14_63706)">
+<path d="M397.679 152.321L452.321 97.6787" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip29_14_63706)">
+<path d="M502.321 97.6792L447.679 152.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip30_14_63706)">
+<path d="M-2.32104 147.679L52.321 202.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip31_14_63706)">
+<path d="M102.321 147.679L47.679 202.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip32_14_63706)">
+<path d="M97.679 202.321L152.321 147.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip33_14_63706)">
+<path d="M202.321 202.321L147.679 147.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip34_14_63706)">
+<path d="M197.679 147.679L252.321 202.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip35_14_63706)">
+<path d="M247.679 147.679L302.321 202.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip36_14_63706)">
+<path d="M297.679 202.321L352.321 147.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip37_14_63706)">
+<path d="M347.679 147.679L402.321 202.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip38_14_63706)">
+<path d="M452.321 202.321L397.679 147.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip39_14_63706)">
+<path d="M502.321 202.321L447.679 147.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip40_14_63706)">
+<path d="M52.321 197.679L-2.32101 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip41_14_63706)">
+<path d="M47.679 252.321L102.321 197.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip42_14_63706)">
+<path d="M97.679 197.679L152.321 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip43_14_63706)">
+<path d="M147.679 197.679L202.321 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip44_14_63706)">
+<path d="M197.679 197.679L252.321 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip45_14_63706)">
+<path d="M302.321 197.679L247.679 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip46_14_63706)">
+<path d="M352.321 197.679L297.679 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip47_14_63706)">
+<path d="M347.679 197.679L402.321 252.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip48_14_63706)">
+<path d="M397.679 252.321L452.321 197.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip49_14_63706)">
+<path d="M502.321 252.321L447.679 197.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip50_14_63706)">
+<path d="M-2.32104 302.321L52.321 247.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip51_14_63706)">
+<path d="M102.321 247.679L47.679 302.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip52_14_63706)">
+<path d="M152.321 302.321L97.679 247.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip53_14_63706)">
+<path d="M147.679 247.679L202.321 302.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip54_14_63706)">
+<path d="M252.321 302.321L197.679 247.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip55_14_63706)">
+<path d="M302.321 247.679L247.679 302.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip56_14_63706)">
+<path d="M297.679 247.679L352.321 302.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip57_14_63706)">
+<path d="M402.321 302.321L347.679 247.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip58_14_63706)">
+<path d="M452.321 302.321L397.679 247.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip59_14_63706)">
+<path d="M447.679 247.679L502.321 302.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip60_14_63706)">
+<path d="M-2.32104 297.679L52.321 352.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip61_14_63706)">
+<path d="M47.679 352.321L102.321 297.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip62_14_63706)">
+<path d="M97.679 297.679L152.321 352.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip63_14_63706)">
+<path d="M147.679 297.679L202.321 352.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip64_14_63706)">
+<path d="M197.679 352.321L252.321 297.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip65_14_63706)">
+<path d="M302.321 352.321L247.679 297.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip66_14_63706)">
+<path d="M297.679 297.679L352.321 352.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip67_14_63706)">
+<path d="M347.679 352.321L402.321 297.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip68_14_63706)">
+<path d="M397.679 352.321L452.321 297.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip69_14_63706)">
+<path d="M447.679 297.679L502.321 352.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip70_14_63706)">
+<path d="M52.321 402.321L-2.32101 347.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip71_14_63706)">
+<path d="M102.321 347.679L47.679 402.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip72_14_63706)">
+<path d="M97.679 402.321L152.321 347.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip73_14_63706)">
+<path d="M147.679 347.679L202.321 402.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip74_14_63706)">
+<path d="M252.321 402.321L197.679 347.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip75_14_63706)">
+<path d="M302.321 402.321L247.679 347.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip76_14_63706)">
+<path d="M297.679 347.679L352.321 402.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip77_14_63706)">
+<path d="M347.679 402.321L402.321 347.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip78_14_63706)">
+<path d="M452.321 347.679L397.679 402.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip79_14_63706)">
+<path d="M502.321 347.679L447.679 402.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip80_14_63706)">
+<path d="M52.321 452.321L-2.32101 397.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip81_14_63706)">
+<path d="M47.679 452.321L102.321 397.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip82_14_63706)">
+<path d="M152.321 397.679L97.679 452.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip83_14_63706)">
+<path d="M202.321 452.321L147.679 397.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip84_14_63706)">
+<path d="M197.679 397.679L252.321 452.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip85_14_63706)">
+<path d="M302.321 452.321L247.679 397.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip86_14_63706)">
+<path d="M352.321 397.679L297.679 452.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip87_14_63706)">
+<path d="M402.321 452.321L347.679 397.679" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip88_14_63706)">
+<path d="M452.321 397.679L397.679 452.321" stroke="white" stroke-width="3"/>
+</g>
+<g clip-path="url(#clip89_14_63706)">
+<path d="M447.679 452.321L502.321 397.679" stroke="white" stroke-width="3"/>
+</g>
+<defs>
+<clipPath id="clip0_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 50 50)"/>
+</clipPath>
+<clipPath id="clip1_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 50 50)"/>
+</clipPath>
+<clipPath id="clip2_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 100 50)"/>
+</clipPath>
+<clipPath id="clip3_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 200 0)"/>
+</clipPath>
+<clipPath id="clip4_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 250 0)"/>
+</clipPath>
+<clipPath id="clip5_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(250)"/>
+</clipPath>
+<clipPath id="clip6_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(300)"/>
+</clipPath>
+<clipPath id="clip7_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 350 50)"/>
+</clipPath>
+<clipPath id="clip8_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 450 0)"/>
+</clipPath>
+<clipPath id="clip9_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 450 50)"/>
+</clipPath>
+<clipPath id="clip10_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 50 50)"/>
+</clipPath>
+<clipPath id="clip11_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 50 100)"/>
+</clipPath>
+<clipPath id="clip12_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 150 50)"/>
+</clipPath>
+<clipPath id="clip13_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 150 100)"/>
+</clipPath>
+<clipPath id="clip14_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 250 100)"/>
+</clipPath>
+<clipPath id="clip15_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 300 100)"/>
+</clipPath>
+<clipPath id="clip16_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(300 50)"/>
+</clipPath>
+<clipPath id="clip17_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 400 50)"/>
+</clipPath>
+<clipPath id="clip18_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(400 50)"/>
+</clipPath>
+<clipPath id="clip19_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 450 100)"/>
+</clipPath>
+<clipPath id="clip20_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 50 100)"/>
+</clipPath>
+<clipPath id="clip21_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 100 100)"/>
+</clipPath>
+<clipPath id="clip22_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 100 150)"/>
+</clipPath>
+<clipPath id="clip23_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(150 100)"/>
+</clipPath>
+<clipPath id="clip24_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 250 100)"/>
+</clipPath>
+<clipPath id="clip25_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 300 100)"/>
+</clipPath>
+<clipPath id="clip26_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 350 100)"/>
+</clipPath>
+<clipPath id="clip27_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 400 100)"/>
+</clipPath>
+<clipPath id="clip28_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(400 100)"/>
+</clipPath>
+<clipPath id="clip29_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 500 150)"/>
+</clipPath>
+<clipPath id="clip30_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 50 150)"/>
+</clipPath>
+<clipPath id="clip31_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 100 200)"/>
+</clipPath>
+<clipPath id="clip32_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(100 150)"/>
+</clipPath>
+<clipPath id="clip33_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 150 200)"/>
+</clipPath>
+<clipPath id="clip34_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 250 150)"/>
+</clipPath>
+<clipPath id="clip35_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 300 150)"/>
+</clipPath>
+<clipPath id="clip36_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(300 150)"/>
+</clipPath>
+<clipPath id="clip37_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 400 150)"/>
+</clipPath>
+<clipPath id="clip38_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 400 200)"/>
+</clipPath>
+<clipPath id="clip39_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 450 200)"/>
+</clipPath>
+<clipPath id="clip40_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 50 250)"/>
+</clipPath>
+<clipPath id="clip41_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(50 200)"/>
+</clipPath>
+<clipPath id="clip42_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 150 200)"/>
+</clipPath>
+<clipPath id="clip43_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 200 200)"/>
+</clipPath>
+<clipPath id="clip44_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 250 200)"/>
+</clipPath>
+<clipPath id="clip45_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 300 250)"/>
+</clipPath>
+<clipPath id="clip46_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 350 250)"/>
+</clipPath>
+<clipPath id="clip47_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 400 200)"/>
+</clipPath>
+<clipPath id="clip48_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(400 200)"/>
+</clipPath>
+<clipPath id="clip49_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 450 250)"/>
+</clipPath>
+<clipPath id="clip50_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(0 250)"/>
+</clipPath>
+<clipPath id="clip51_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 100 300)"/>
+</clipPath>
+<clipPath id="clip52_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 100 300)"/>
+</clipPath>
+<clipPath id="clip53_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 200 250)"/>
+</clipPath>
+<clipPath id="clip54_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 200 300)"/>
+</clipPath>
+<clipPath id="clip55_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 300 300)"/>
+</clipPath>
+<clipPath id="clip56_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 350 250)"/>
+</clipPath>
+<clipPath id="clip57_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 350 300)"/>
+</clipPath>
+<clipPath id="clip58_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 400 300)"/>
+</clipPath>
+<clipPath id="clip59_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 500 250)"/>
+</clipPath>
+<clipPath id="clip60_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 50 300)"/>
+</clipPath>
+<clipPath id="clip61_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(50 300)"/>
+</clipPath>
+<clipPath id="clip62_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 150 300)"/>
+</clipPath>
+<clipPath id="clip63_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 200 300)"/>
+</clipPath>
+<clipPath id="clip64_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(200 300)"/>
+</clipPath>
+<clipPath id="clip65_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 250 350)"/>
+</clipPath>
+<clipPath id="clip66_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 350 300)"/>
+</clipPath>
+<clipPath id="clip67_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(350 300)"/>
+</clipPath>
+<clipPath id="clip68_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(400 300)"/>
+</clipPath>
+<clipPath id="clip69_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 500 300)"/>
+</clipPath>
+<clipPath id="clip70_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 0 400)"/>
+</clipPath>
+<clipPath id="clip71_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 100 400)"/>
+</clipPath>
+<clipPath id="clip72_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(100 350)"/>
+</clipPath>
+<clipPath id="clip73_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 200 350)"/>
+</clipPath>
+<clipPath id="clip74_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 200 400)"/>
+</clipPath>
+<clipPath id="clip75_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 250 400)"/>
+</clipPath>
+<clipPath id="clip76_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 350 350)"/>
+</clipPath>
+<clipPath id="clip77_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(350 350)"/>
+</clipPath>
+<clipPath id="clip78_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 450 400)"/>
+</clipPath>
+<clipPath id="clip79_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 500 400)"/>
+</clipPath>
+<clipPath id="clip80_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 0 450)"/>
+</clipPath>
+<clipPath id="clip81_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(50 400)"/>
+</clipPath>
+<clipPath id="clip82_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 150 450)"/>
+</clipPath>
+<clipPath id="clip83_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 150 450)"/>
+</clipPath>
+<clipPath id="clip84_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 1 -1 0 250 400)"/>
+</clipPath>
+<clipPath id="clip85_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 250 450)"/>
+</clipPath>
+<clipPath id="clip86_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 350 450)"/>
+</clipPath>
+<clipPath id="clip87_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(0 -1 1 0 350 450)"/>
+</clipPath>
+<clipPath id="clip88_14_63706">
+<rect width="50" height="50" fill="white" transform="matrix(-1 0 0 -1 450 450)"/>
+</clipPath>
+<clipPath id="clip89_14_63706">
+<rect width="50" height="50" fill="white" transform="translate(450 400)"/>
+</clipPath>
+</defs>
+</svg>
