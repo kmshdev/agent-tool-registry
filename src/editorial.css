@@ -3285,3 +3285,35 @@ body:before {
 .terminal-hero h1 > span:not(.terminal-caret) {
   display: inline-block;
 }
+
+/* Personal monogram and the supplied collection quotation. */
+.brand-mark {
+  color: inherit;
+  transition:
+    color 180ms ease,
+    filter 180ms ease;
+}
+.brand:hover .brand-mark,
+.brand:focus-visible .brand-mark {
+  color: #9ee7e5;
+  filter: drop-shadow(0 0 4px #9ee7e580) drop-shadow(0 0 10px #9ee7e540);
+}
+.collection-quote {
+  margin: 28px 0;
+  max-width: 64ch;
+  font-family: var(--mono);
+  font-size: var(--type-32);
+  font-weight: 400;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+@media (max-width: 700px) {
+  .collection-quote {
+    font-size: var(--type-20);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark {
+    transition: none;
+  }
+}
