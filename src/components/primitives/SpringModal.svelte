@@ -1,18 +1,13 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
   import { animate } from 'motion';
-  import { createDialKit, DialRoot } from 'dialkit/svelte';
   import MorphIcon from './MorphIcon.svelte';
   let { title, onclose, children, tuning = false, wide = false, resource = false }: { title: string; onclose: () => void; children: Snippet; tuning?: boolean; wide?: boolean; resource?: boolean } = $props();
   let dialog = $state<HTMLDialogElement>(null!);
   let panel = $state<HTMLDivElement>(null!);
   let replay = $state(0);
-  const values = createDialKit('Modal entrance', {
-    entrance: { visualDuration: [.4,.1,1.2,.05], bounce: [.18,0,.65,.01] },
-    overlayOpacity: [.32,0,.8,.01],
-    borderRadius: [12,0,40,1],
-    replay: { type: 'action' },
-  }, { onAction: action => { if (action === 'replay') replay++; } });
+  let values = $state({entrance:{visualDuration:.4,bounce:.18},overlayOpacity:.32,borderRadius:12});
+  let tuningOpen = $state(false);
   let ready = $state(false);
   onMount(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -32,7 +27,7 @@
   <div bind:this={panel} class="spring-panel" class:wide class:resource style:border-radius={`${values.borderRadius}px`}>
     {#if !resource}<header><h2>{wide?'Resource details':title}</h2><button type="button" class="icon-button" aria-label={`Close ${title}`} onclick={onclose}><MorphIcon icon="close"/></button></header>{/if}
     {@render children()}
-    {#if tuning}<details class="modal-tuning"><summary>Motion controls</summary><DialRoot mode="inline" theme="dark" productionEnabled defaultOpen /></details>{/if}
+    {#if tuning}<details class="modal-tuning" ontoggle={event=>tuningOpen=event.currentTarget.open}><summary>Motion controls</summary>{#if tuningOpen}{#await import('./ModalTuning.svelte') then module}<module.default onchange={next=>values=next} onreplay={()=>replay++}/>{/await}{/if}</details>{/if}
   </div>
 </dialog>
 <style>

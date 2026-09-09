@@ -10,7 +10,7 @@
     plus: [[12,4,12,20,1],[4,12,20,12,1],[4,12,20,12,0]],
     minus: [[4,12,20,12,0],[4,12,20,12,1],[4,12,20,12,0]],
   };
-  let slots = $state<number[][]>(geometry.menu.map(slot => [...slot]));
+  let slots = $state<number[][]>(untrack(() => geometry[icon].map(slot => [...slot])));
   let mounted = $state(false);
   onMount(() => { mounted = true; });
   function path(slot: number[]) {
@@ -21,6 +21,7 @@
     const target = geometry[icon];
     if (!mounted) return;
     const initial = untrack(() => slots.map(slot => [...slot]));
+    if (initial.every((slot,i)=>slot.every((value,j)=>value===target[i][j]))) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { slots = target.map(slot => [...slot]); return; }
     const animation = animate(0, 1, { duration: .24, ease: 'easeOut', onUpdate: progress => {
       slots = target.map((slot,i) => slot.map((value,j) => initial[i][j] + (value-initial[i][j])*progress));

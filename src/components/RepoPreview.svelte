@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
-  import { ArrowUpRight, Star, GitFork, X, FolderGit2 } from '@lucide/svelte';
+  import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
+  import Star from '@lucide/svelte/icons/star';
+  import GitFork from '@lucide/svelte/icons/git-fork';
+  import X from '@lucide/svelte/icons/x';
+  import FolderGit2 from '@lucide/svelte/icons/folder-git-2';
   import { relative, type Entry } from '../lib/types';
   let { entries, onselect }: { entries: Entry[]; onselect: (id: string) => void } = $props();
   let entry = $state<Entry>();

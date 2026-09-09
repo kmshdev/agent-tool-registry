@@ -20,7 +20,7 @@ vp run start
 
 The production port defaults to 4317 and supports `PORT`. The app listens on loopback only. Refreshing stops when the server stops; the last snapshot remains searchable through the offline CLI. The preview command is a static build preview and does not provide the registry API; use `vp run start` for the complete app.
 
-The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with a fixed Stripe-style terminal navigation strip, a Berkeley Mono welcome and Space Grotesk tagline, four featured open-source projects with animated box drawings and pattern studies, an API-backed statistics ticker, compact search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its cream-and-orange detail paper. Reduced motion uses native horizontal scrolling without a long pinned section. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
+The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with a fixed Stripe-style terminal navigation strip, a Berkeley Mono welcome and Space Grotesk tagline, four featured open-source projects and credited contributions with animated box drawings and pattern studies, an API-backed statistics ticker, compact search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its cream-and-orange detail paper. The gallery mounts only visible cards and nearby neighbors; year jumps and Show more preserve the full collection without building thousands of hidden controls. Metadata and badges use 16px tokens, and the wider rail uses a glow for selection. Reduced motion uses native horizontal scrolling without a long pinned section. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
 
 ## Discover and query
 
@@ -72,7 +72,7 @@ vp test
 vp build
 ```
 
-Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, live revision events, preview access/cache invalidation, and the public export allowlist. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/type-card-redesign/`.
+Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, live revision events, preview access/cache invalidation, the public export allowlist, and bounded timeline projection/range boundaries. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/scroll-review/`.
 
 This application lives in its own `tool-registry` directory. Projects in the parent directory are outside its build and check scope. See `THIRD_PARTY_NOTICES.md` for template and component attribution.
 
@@ -81,3 +81,5 @@ This application lives in its own `tool-registry` directory. Projects in the par
 Berkeley Mono is optional and is not committed to the repository. If your license permits local web use, place your WOFF2 file at `public/fonts/berkeley-mono.woff2`. The interface falls back to system monospace when it is absent. Snapattern artwork has separate CC BY 4.0 attribution in THIRD_PARTY_NOTICES.md.
 
 Typography uses the Fey UI Kit size scale with Berkeley Mono as the primary face and bundled Space Grotesk as the secondary. Resource details use only Berkeley Mono at 16–24px. The requested Molesk face is pending a supplied font asset because its official download service returns an error.
+
+The featured selection includes Databento Adapter and CSS Tokenography, plus contributions to Valory’s Olas Trader and archived Agents.fun / Eliza. Contribution cards explicitly distinguish collaborative work from owned projects.

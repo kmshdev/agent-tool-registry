@@ -35,5 +35,5 @@
 @keyframes turn{from{transform:rotate(-25deg) scale(.85)}to{transform:rotate(35deg) scale(1.05)}}
 @keyframes breathe{to{opacity:.45;scale:1 .75}}
 }
-.compact .study-coordinate{display:none}.compact .study-surface{opacity:.17}
+.compact .study-sculpture>*{animation:none}.compact.in-view .study-sculpture{will-change:transform}.compact .study-coordinate{display:none}.compact .study-surface{opacity:.17}
 </style>

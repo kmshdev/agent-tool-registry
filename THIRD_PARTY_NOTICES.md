@@ -36,7 +36,7 @@ SOFTWARE.
 
 ## Icons and typography
 
-Navigation uses bundled Phosphor Bold SVGs (MIT) via Iconify, discovered through [Icônes](https://github.com/antfu-collective/icones). Other controls retain Lucide with stronger strokes. The logo is an original SVG interpretation of the supplied geometric reference.
+Navigation uses bundled Phosphor Bold SVGs (MIT) via Iconify, discovered through [Icônes](https://github.com/antfu-collective/icones). Other controls retain Lucide with stronger strokes, imported through individual icon exports rather than the full development barrel. The logo is an original SVG interpretation of the supplied geometric reference.
 
 Berkeley Mono is served locally from the user's supplied variable font (400–700), converted to WOFF2. The font file is ignored by Git and is not included in source distribution. It is not covered by this project's component licenses. System monospace is the fallback. The UI no longer requests Google Fonts.
 
@@ -74,7 +74,7 @@ SOFTWARE.
 
 ## Motion libraries and design references
 
-Motion, DialKit, Kugiri, and Cuelume are installed dependencies; their distributions include upstream licenses. Stripe, the AI Interface Museum, Blocks, Morphrig, and U.S. Graphics inform original layout and interaction code. Their site artwork and logos are not copied into the application.
+Motion, DialKit, Kugiri, and Cuelume are installed dependencies; DialKit loads on demand when the local motion-tuning section opens; their distributions include upstream licenses. Stripe, the AI Interface Museum, Blocks, Morphrig, and U.S. Graphics inform original layout and interaction code. Their site artwork and logos are not copied into the application.
 
 Snapattern artwork was exported from the user’s copy of [Snapatterns — 50 Seamless Pattern library](https://www.figma.com/community/file/1503771629691015061/snapatterns-50-seamless-pattern-library), by Briston. The source listing specifies [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), verified September 9, 2026. The app recolors, rotates, and crops these exports for feature panels, repository artwork, and the page background. Original animated SVG contours are layered over the masks. This artwork is licensed separately from application code.
 
@@ -95,3 +95,7 @@ Project preview images are local screenshots of repository-linked public website
 The type scale was inspected in the user-selected [Fey UI Kit Typography frame](https://www.figma.com/design/HfZ1EK15P2R3HqaAHtiDNG/Fey-UI-kit-V1.0--unofficial----Community--Community-?node-id=4008-2544). The scale is mapped to Berkeley Mono; no Calibre font is bundled. The supplied information-card image informs the paper layout and shadow. Its engineering illustration is an original SVG composition.
 
 [Molesk](https://www.freefaces.gallery/typefaces/molesk), by Pedro Lobo / UPPERtype, was requested as an additional display face. The official download link currently returns a service error. No Molesk font file is included or represented as active.
+
+## Featured public contributions
+
+Olas Trader and Agents.fun / Eliza are Valory projects under Apache-2.0. The portfolio describes KMSH’s contributions and retains Valory ownership; it does not claim sole authorship. Agents.fun / Eliza is marked archived. Databento Adapter and the CSS Tokenography plugin marketplace are public MIT-licensed projects. No source from the featured repositories is copied into this app.

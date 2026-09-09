@@ -48,7 +48,7 @@
   --blue: #92b8f8;
   --amber: #f5c57c;
   --mint: #73d7d0;
-  --text-meta: var(--type-12);
+  --text-meta: var(--type-16);
   --text-caption: var(--type-14);
   --text-body: var(--type-16);
   --text-section: var(--type-24);
@@ -1489,7 +1489,7 @@ body {
   transform: rotate(270deg);
 }
 .feature-art .art-symbol svg {
-  width: 58px;
+  width: 72px;
   height: 58px;
 }
 .feature-art .pattern {
@@ -1659,8 +1659,8 @@ body:before {
 .sidebar {
   left: 8px;
   top: 12px;
-  width: 58px;
-  padding: 10px 5px;
+  width: 72px;
+  padding: 12px 7px;
   max-height: calc(100dvh - 24px);
   border-radius: 5px;
   background: #092536e8;
@@ -1702,7 +1702,9 @@ body:before {
 }
 .sidebar nav button.active {
   background: color-mix(in srgb, var(--source-color, var(--accent)) 17%, transparent);
-  box-shadow: inset 2px 0 var(--source-color, var(--accent));
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--source-color, var(--accent)) 24%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--source-color, var(--accent)) 40%, transparent);
 }
 .sidebar-bottom {
   margin-top: 12px;
@@ -2217,7 +2219,7 @@ body:before {
     border-bottom: 1px solid var(--line);
   }
   .sidebar.mobile-open {
-    width: 58px;
+    width: 72px;
     left: 8px;
     top: 8px;
   }
@@ -2610,7 +2612,7 @@ body:before {
 }
 .sidebar nav button:hover {
   transform: translateX(3px);
-  box-shadow: -3px 0 0 currentColor;
+  box-shadow: 0 0 14px color-mix(in srgb, currentColor 20%, transparent);
 }
 .sidebar nav button:hover .folder-icon {
   transform: rotate(-7deg) translateY(-2px);
@@ -3122,4 +3124,164 @@ body:before {
   .resource-sheet * {
     scroll-behavior: auto;
   }
+}
+
+/* Shared readable metadata, including numeric and language badges. */
+.feature .section-label,
+.section-label > span,
+.art-index,
+.timeline-date,
+.timeline-copy .eyebrow,
+.timeline-meta,
+.repo-language,
+.timeline-navigation,
+.live-ticker,
+.ticker-toggle,
+.results-count,
+.workspace-footer,
+.console-status {
+  font-size: var(--type-16);
+  line-height: 1.4;
+}
+.feature .pill-button {
+  font-size: var(--type-14);
+  min-height: 36px;
+}
+.art-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 4px 8px;
+}
+.live-ticker {
+  height: 48px;
+}
+.ticker-label {
+  padding-right: 12px;
+}
+.ticker-group {
+  gap: 28px;
+  padding-left: 28px;
+}
+.sidebar nav button {
+  min-height: 52px;
+}
+.sidebar .folder-icon {
+  scale: 1.12;
+}
+.sidebar nav button.active .folder-icon {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, currentColor 40%, transparent));
+}
+.sidebar .brand {
+  width: 40px;
+  height: 32px;
+}
+.sidebar .brand-mark svg {
+  width: 36px;
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  :root {
+    --gutter: 100px;
+  }
+}
+@media (max-width: 700px) {
+  .live-ticker {
+    height: 48px;
+  }
+  .ticker-label {
+    max-width: 48%;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .timeline-navigation {
+    gap: 12px;
+  }
+  .timeline-navigation button {
+    font-size: var(--type-16);
+  }
+}
+
+.timeline-spacer {
+  flex: none;
+  height: 1px;
+  pointer-events: none;
+}
+.star-timeline {
+  overflow-x: hidden;
+  touch-action: pan-y;
+  scroll-behavior: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .star-timeline {
+    overflow-x: auto;
+    touch-action: auto;
+  }
+}
+
+/* Keep variable-height cards clear of the date axis; compact windows use one row. */
+@media (min-width: 701px) and (min-height: 901px) {
+  .timeline-card {
+    position: absolute;
+    top: auto;
+    bottom: calc(50% + 24px);
+  }
+  .timeline-slot.alternate .timeline-card {
+    top: calc(50% + 24px);
+    bottom: auto;
+  }
+}
+@media (max-height: 900px), (max-width: 700px) {
+  .timeline-slot,
+  .timeline-slot.alternate {
+    align-items: center;
+    padding-block: 0;
+  }
+  .timeline-card,
+  .timeline-slot.alternate .timeline-card {
+    position: relative;
+    top: auto;
+    bottom: auto;
+  }
+  .timeline-slot:after,
+  .timeline-card:after,
+  .timeline-slot.alternate .timeline-card:after {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .feature {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .feature .section-label,
+  .feature-art,
+  .feature h2,
+  .feature p,
+  .feature .pill-button {
+    grid-column: 1;
+  }
+  .feature-art {
+    grid-row: 2;
+    aspect-ratio: 1.6;
+  }
+  .feature h2 {
+    grid-row: 3;
+    margin: 20px 0 12px;
+  }
+  .feature p {
+    grid-row: 4;
+  }
+  .feature .pill-button {
+    grid-row: 5;
+  }
+  .terminal-hero .hero-bottom p {
+    font-size: var(--type-18);
+  }
+}
+
+/* Contain Kugiri's block line wrappers so explicit breaks do not double the hero height. */
+.terminal-hero h1 > span:not(.terminal-caret) {
+  display: inline-block;
 }

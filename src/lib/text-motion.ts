@@ -136,10 +136,10 @@ export function revealCard(node: HTMLElement) {
       const direction = entry.boundingClientRect.left > innerWidth / 2 ? 1 : -1;
       animation = node.animate(
         [
-          { opacity: 0, translate: `${direction * 34}px 28px`, filter: "blur(3px)" },
-          { opacity: 1, translate: "0 0", filter: "blur(0)" },
+          { opacity: 0, translate: `${direction * 12}px 6px` },
+          { opacity: 1, translate: "0 0" },
         ],
-        { duration: 650, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" },
+        { duration: 180, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" },
       );
     },
     { threshold: 0.12 },

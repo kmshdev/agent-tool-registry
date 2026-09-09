@@ -4,7 +4,7 @@ The public site is https://kmsh.tech, served by the Vercel project kmsh-tech in 
 
 ## Public boundary
 
-Vercel builds with "vp run build:showcase", which selects the showcase Vite mode. This mode excludes the registry server plugin and reads /discoveries/registry.json. No local scanners, mutation API, SSE stream, personal inventory, notes, or favorites are deployed. The public interface retains category browsing, search, the gallery, map, export, and read-only repository details. Four curated owned projects are also bundled from src/lib/featured-projects.ts, separately from starred counts; they contain only public editorial metadata and repository links.
+Vercel builds with "vp run build:showcase", which selects the showcase Vite mode. This mode excludes the registry server plugin and reads /discoveries/registry.json. No local scanners, mutation API, SSE stream, personal inventory, notes, or favorites are deployed. The public interface retains category browsing, search, the gallery, map, export, and read-only repository details. Four curated projects and credited public contributions are also bundled from src/lib/featured-projects.ts, separately from starred counts; they contain only public editorial metadata and repository links.
 
 server/showcase.mjs explicitly allowlists public GitHub fields. Repositories must have isPublic=true from a current GitHub import; private and unknown-visibility records are excluded. The exporter never spreads arbitrary registry fields or preferences. Its regression test includes private, unknown, local, and extra-secret-field fixtures.
 

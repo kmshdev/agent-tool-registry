@@ -1,6 +1,11 @@
 <script lang="ts">
   import { publicShowcase } from '../lib/runtime';
-  import { X, Star, Copy, Check, ArrowUpRight, Trash2 } from '@lucide/svelte';
+  import X from '@lucide/svelte/icons/x';
+  import Star from '@lucide/svelte/icons/star';
+  import Copy from '@lucide/svelte/icons/copy';
+  import Check from '@lucide/svelte/icons/check';
+  import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
+  import Trash2 from '@lucide/svelte/icons/trash-2';
   import { relative, type Entry } from '../lib/types';
   let { entry, related, onclose, onfavorite, onsave, onselect, onremove }: { entry: Entry; related: Entry[]; onclose: () => void; onfavorite: (entry: Entry) => void; onsave: (entry: Entry, notes: string) => Promise<void>; onselect: (id: string) => void; onremove: (entry: Entry) => void } = $props();
   let draft = $state('');

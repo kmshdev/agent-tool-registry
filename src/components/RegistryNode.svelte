@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Handle, Position } from '@xyflow/svelte';
-  import { Layers, ArrowUpRight } from '@lucide/svelte';
+  import Layers from '@lucide/svelte/icons/layers';
+  import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
   import ToolIcon from './ToolIcon.svelte';
   let { data, selected = false }: { data: { label: string; subtitle: string; color: string; kind?: string; repoId?: string; hub?: boolean; root?: boolean; compact?: boolean }; selected?: boolean } = $props();
 </script>
