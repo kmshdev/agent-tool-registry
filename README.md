@@ -2,7 +2,9 @@
 
 A local capability registry built from the xyflow Vite / Svelte Flow template. The workbench combines PATH executables, installed Homebrew packages, macOS application bundles, personal agent and skill files, cached plugin skills, GitHub stars, and saved resources.
 
-## Run
+The public GitHub-discovery showcase is hosted at [kmsh.tech](https://kmsh.tech). It publishes an allowlisted snapshot of public repositories and selected website previews. Local inventory and personal annotations stay on the operator's machine. See [DEPLOYMENT.md](DEPLOYMENT.md) for the public build, refresh, and release workflow.
+
+## Run locally
 
 ```sh
 vp install
@@ -54,7 +56,7 @@ node scripts/capture-previews.mjs 60
 
 The optional numeric limit selects newest starred records, including those without homepages; it defaults to 60 and is bounded at 2000. `PREVIEW_BROWSER_PATH` can select an existing Chromium executable. Captures use fresh unauthenticated browser contexts, block non-public destinations and WebSockets, and write only to ignored `.registry/previews/`. The command skips existing captures and reports per-site failures. Inspect captures for challenge, maintenance, or loading screens; remove unusable cached images with `trash` so the cards fall back to artwork. Reload the app after capturing. A changed homepage gets a different cache key; remove an existing capture to refresh it.
 
-The API advertises only available cached screenshots and serves them by known repository ID. It cannot capture an arbitrary URL or read an arbitrary path. Websites that have no homepage, fail capture, or lack a cached screenshot use animated box drawings or Snapatterns. Previews are local evidence and are not included in Git.
+The API advertises only available cached screenshots and serves them by known repository ID. It cannot capture an arbitrary URL or read an arbitrary path. Websites that have no homepage, fail capture, or lack a cached screenshot use animated box drawings or Snapatterns. The local capture cache is ignored. The explicit showcase exporter copies only selected public-repository previews into the versioned public dataset.
 
 ## Persistence and boundaries
 
@@ -70,10 +72,10 @@ vp test
 vp build
 ```
 
-Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, live revision events, and preview access/cache invalidation. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/header-redesign/`.
+Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, live revision events, preview access/cache invalidation, and the public export allowlist. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/header-redesign/`.
 
 This application lives in its own `tool-registry` directory. Projects in the parent directory are outside its build and check scope. See `THIRD_PARTY_NOTICES.md` for template and component attribution.
 
 ## Local typography asset
 
-Berkeley Mono is optional and is not redistributed. If your license permits local web use, place your WOFF2 file at `public/fonts/berkeley-mono.woff2`. The interface falls back to system monospace when it is absent. Snapattern artwork has separate CC BY 4.0 attribution in THIRD_PARTY_NOTICES.md.
+Berkeley Mono is optional and is not committed to the repository. If your license permits local web use, place your WOFF2 file at `public/fonts/berkeley-mono.woff2`. The interface falls back to system monospace when it is absent. Snapattern artwork has separate CC BY 4.0 attribution in THIRD_PARTY_NOTICES.md.

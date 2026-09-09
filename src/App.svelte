@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
+  import { publicShowcase } from './lib/runtime';
   import SpringModal from './components/primitives/SpringModal.svelte';
   import { initializeSound, toggleSound, cue } from './lib/sound';
   let soundEnabled = $state(true);
@@ -53,7 +54,7 @@
   function globalKeydown(event: KeyboardEvent) {
     if(event.key==='Escape'){consoleOpen=false;showAdd=false;mobileNav=false;sourcesOpen=false;return;}
     if (!event.ctrlKey && !event.metaKey && !event.altKey && !mobileNav && !document.querySelector('dialog[open]') && !(event.target as HTMLElement).closest('input,textarea,select,[contenteditable="true"]')) {
-      const shortcuts:Record<string,typeof view>={o:'overview',i:'list',m:'map',a:'activity'};
+      const shortcuts:Record<string,typeof view>={o:'overview',i:'list',m:'map',...(publicShowcase?{}:{a:'activity' as const})};
       const next=shortcuts[event.key.toLowerCase()];
       if(next){event.preventDefault();if(next==='overview')navigate('all');view=next;sourcesOpen=false;selectedId='';consoleOpen=false;window.scrollTo({top:0});}
       if(event.key.toLowerCase()==='c'){event.preventDefault();consoleOpen=!consoleOpen;}
@@ -78,7 +79,12 @@
     let animation: Animation | undefined;
     return { update() { animation?.cancel(); if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) animation=node.animate([{opacity:.6,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:180,easing:'ease-out'}); }, destroy(){animation?.cancel();} };
   }
-  const navigation = [
+  const publicIcons:Record<string,string>={Design:'apps',Agents:'agents',Development:'cli','Browser & web':'github',Automation:'brew',all:'all'};
+  const navigation = publicShowcase ? [
+    {id:'all',label:'All discoveries',icon:Layers},{id:'Design',label:'Design',icon:AppWindow},
+    {id:'Agents',label:'Agents & AI',icon:Bot},{id:'Development',label:'Development',icon:Terminal},
+    {id:'Browser & web',label:'Browser & web',icon:Github},{id:'Automation',label:'Automation',icon:Blocks},
+  ] : [
     { id: 'all', label: 'All resources', icon: Layers },
     { id: 'cli', label: 'Command line', icon: Terminal },
     { id: 'brew', label: 'Toolchains', icon: Blocks },
@@ -86,7 +92,7 @@
     { id: 'apps', label: 'Mac applications', icon: AppWindow },
     { id: 'github', label: 'GitHub stars', icon: Github },
   ];
-  let sectionTitle = $derived(navigation.find(item=>item.id===section)?.label ?? (section==='favorites'?'Favorites':'Saved resources'));
+  let sectionTitle = $derived(publicShowcase ? (category==='all'?'GitHub discoveries':category) : navigation.find(item=>item.id===section)?.label ?? (section==='favorites'?'Favorites':'Saved resources'));
   const spotlight = ['rg', 'vp', 'uv', 'cargo', 'gh', 'codex', 'firecrawl', 'steel', 'playwright-cli', 'reviewer', 'svelte-file-editor'];
   let filtered = $derived.by(() => {
     const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -106,11 +112,11 @@
   let favorites = $derived(data.entries.filter(entry => entry.favorite).length);
   let localCount = $derived(data.entries.filter(entry => entry.status === 'Installed').length);
   let sourceErrors = $derived(data.sources.filter(source => source.status === 'error'));
-  let count = (id: string) => id === 'all' ? data.entries.length : data.entries.filter(entry => entry.source === id).length;
+  let count = (id: string) => id === 'all' ? data.entries.length : data.entries.filter(entry => publicShowcase ? (id==='github'||entry.category===id) : entry.source === id).length;
   $effect(() => { void [query, section, category, status, sort, minimumStars]; page = 0; });
   $effect(() => { if (page >= pages) page = pages - 1; });
   function notify(message: string) { if (/could not|failed|error/i.test(message)) toast.error(message); else toast.success(message); }
-  function applyRoute() { const route = parseRoute(window.location.hash); view=route.view; section=route.section; selectedId=route.selectedId; sourcesOpen=route.sourcesOpen; query=''; category='all'; status='all'; minimumStars=0; mobileNav=false; }
+  function applyRoute() { const route = parseRoute(window.location.hash); view=publicShowcase&&route.view==='activity'?'overview':route.view; section=publicShowcase?'github':route.section; selectedId=route.selectedId; sourcesOpen=publicShowcase?false:route.sourcesOpen; query=''; category='all'; status='all'; minimumStars=0; mobileNav=false; }
   $effect(()=> { const hash=routeHash({view,section,selectedId,sourcesOpen}); if(routeReady && window.location.hash!==hash) { window.history.pushState(null,'',hash); routeRevision++; } });
   async function request(url: string, method = 'GET', body?: unknown) {
     const response = await fetch(url, { method, ...(body !== undefined ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}) });
@@ -124,7 +130,7 @@
   async function load() {
     if (loadingSnapshot) { loadAgain = true; return loadingSnapshot; }
     loadingSnapshot = (async () => {
-      try { const snapshot = await request('/api/registry') as Snapshot; if (snapshot.revision >= data.revision) data = snapshot; error = ''; }
+      try { const snapshot = await request(publicShowcase?'/discoveries/registry.json':'/api/registry') as Snapshot; if (snapshot.revision >= data.revision) data = snapshot; error = ''; }
       catch (cause) { error = cause instanceof Error ? cause.message : 'Registry unavailable'; }
       finally { loading = false; loadingSnapshot = null; if (!error && (loadAgain || announcedRevision > data.revision)) { loadAgain = false; void load(); } }
     })();
@@ -138,6 +144,7 @@
     window.addEventListener('popstate',applyRoute);
     window.addEventListener('hashchange',applyRoute);
     void load();
+    if(publicShowcase) return () => { window.removeEventListener('popstate',applyRoute);window.removeEventListener('hashchange',applyRoute); };
     const stream = new EventSource('/api/events');
     stream.onopen = () => { connected = true; };
     stream.onmessage = event => {
@@ -157,7 +164,7 @@
   async function favorite(entry: Entry) { try { const wasFavorite=entry.favorite; await annotate(entry, { favorite: !wasFavorite }); toast.success(wasFavorite?'Removed from favorites':'Saved to favorites',{description:entry.name,action:{label:'Undo',onClick:()=>{void annotate(entry,{favorite:Boolean(wasFavorite)}).catch(()=>toast.error('Could not undo favorite'));}}}); } catch { notify('Could not save favorite'); } }
   async function saveNotes(entry: Entry, notes: string) { try { await annotate(entry, { notes }); cue('success'); toast.success('Note saved',{description:entry.name}); } catch { notify('Could not save note'); throw new Error('Save failed'); } }
   async function remove(entry: Entry) { try { await request(`/api/entries/${encodeURIComponent(entry.id)}`, 'DELETE'); selectedId = ''; await load(); notify('Record removed'); } catch { notify('Could not remove record'); } }
-  function navigate(id: string) { window.scrollTo({top:0}); cue('page'); minimumStars = 0; section = id; query = ''; category = 'all'; status = 'all'; view = 'list'; mobileNav = false; sourcesOpen = false; selectedId=''; }
+  function navigate(id: string) { window.scrollTo({top:0}); cue('page'); minimumStars = 0; section = publicShowcase ? 'github' : id; query = ''; category = publicShowcase && !['all','github'].includes(id) ? id : 'all'; status = 'all'; view = 'list'; mobileNav = false; sourcesOpen = false; selectedId=''; }
   function exportData() {
     const content = JSON.stringify({ exportedAt: new Date().toISOString(), revision: data.revision, entries: filtered }, null, 2);
     const url = URL.createObjectURL(new Blob([content], { type: 'application/json' }));
@@ -171,34 +178,34 @@
   }
 </script>
 
-<svelte:head><title>Build for Codex — Tool Registry</title><meta name="description" content="Your local tools, agents, applications, and GitHub discoveries." /><meta name="theme-color" content="#031a2b" /></svelte:head>
+<svelte:head><title>{publicShowcase?'KMSH.DEV — Discoveries':'Build for Codex — Tool Registry'}</title><meta name="description" content={publicShowcase?"A small corner of the internet. Open-source tools and ideas saved by KMSH.":"Your local tools, agents, applications, and GitHub discoveries."} /><meta name="theme-color" content="#031a2b" /></svelte:head>
 <svelte:window onkeydown={globalKeydown} onpointerdown={(event)=>{if(!(event.target as Element).closest(".terminal-console"))consoleOpen=false;}} />
 <a class="skip-link" href="#registry-main" onclick={(event)=>{event.preventDefault();document.getElementById('registry-main')?.focus();}}>Skip to content</a>
-<div class="app-shell">
+<div class="app-shell" class:public-showcase={publicShowcase}>
   {#if mobileNav}<button class="nav-scrim" aria-label="Close navigation" onclick={() => mobileNav = false}></button>{/if}
   <aside class:mobile-open={mobileNav} class="sidebar" role={mobileNav?'dialog':undefined} aria-modal={mobileNav?true:undefined} aria-label="Workspace navigation">
     <a class="brand" href="/" aria-label="Build for Codex home"><span class="brand-mark"><svg viewBox="0 0 120 48" aria-hidden="true"><path fill="currentColor" d="M10 4h38q12 0 12 12v9H19v4h41v7q0 12-12 12H12Q0 48 0 36V16Q0 4 10 4Zm62 0h36q12 0 12 12v9H60v-9Q60 4 72 4ZM79 29h22v19H79Z"/></svg></span><span>Build <span class="brand-sub">for Codex</span></span><span class="brand-dot"></span></a>
     <div class="workspace-switch"><span class="workspace-avatar">K</span><span>Personal workspace<small>Local registry</small></span><ChevronDown size={13} /></div>
     <div class="nav-label">WORKSPACE</div>
-    <nav aria-label="Registry navigation">{#each navigation as item}<button data-source={item.id} class:active={section === item.id && !sourcesOpen} title={item.label} aria-label={item.label} onclick={() => navigate(item.id)}><FolderIcon name={item.id} /><span class="nav-tooltip">{item.label}</span><small>{count(item.id).toLocaleString()}</small></button>{/each}</nav>
-    <div class="nav-label collection-label">COLLECTIONS<button class="icon-button" aria-label="Add resource" title="Add resource" onclick={() => showAdd = true}><Plus size={14} /></button></div>
-    <nav aria-label="Collections"><button class:active={section === 'favorites' && !sourcesOpen} title="Favorites" onclick={() => navigate('favorites')}><Star size={16} /><span>Favorites</span><small>{favorites}</small></button><button class:active={section === 'custom' && !sourcesOpen} title="Saved resources" onclick={() => navigate('custom')}><FolderHeart size={16} /><span>Saved resources</span><small>{count('custom')}</small></button></nav>
-    <div class="sidebar-bottom"><button class:active={sourcesOpen} class="source-nav" title="Connected sources" onclick={() => { sourcesOpen = !sourcesOpen; mobileNav = false; }}><Cable size={16} /><span>Connected sources</span><span class:has-error={sourceErrors.length} class="source-count">5</span></button><div class="sync-footer"><span class:offline={!connected} class="live-dot"></span><span>{connected ? 'Live sync enabled' : 'Connecting…'}<small>Local · every 60 seconds</small></span></div><div class="profile"><span class="profile-avatar">K</span><span>kmshdev<small>Personal</small></span><span class="profile-local">LOCAL</span></div></div>
+    <nav aria-label="Registry navigation">{#each navigation as item}<button data-source={publicShowcase?publicIcons[item.id]:item.id} class:active={(publicShowcase ? category === item.id : section === item.id) && !sourcesOpen} title={item.label} aria-label={item.label} onclick={() => navigate(item.id)}><FolderIcon name={publicShowcase?publicIcons[item.id]:item.id} /><span class="nav-tooltip">{item.label}</span><small>{count(item.id).toLocaleString()}</small></button>{/each}</nav>
+    {#if !publicShowcase}    <div class="nav-label collection-label">COLLECTIONS<button class="icon-button" aria-label="Add resource" title="Add resource" onclick={() => showAdd = true}><Plus size={14} /></button></div>
+    <nav aria-label="Collections"><button class:active={section === 'favorites' && !sourcesOpen} title="Favorites" onclick={() => navigate('favorites')}><Star size={16} /><span>Favorites</span><small>{favorites}</small></button><button class:active={section === 'custom' && !sourcesOpen} title="Saved resources" onclick={() => navigate('custom')}><FolderHeart size={16} /><span>Saved resources</span><small>{count('custom')}</small></button></nav>{/if}
+    {#if publicShowcase}<div class="sidebar-bottom"><a class="public-github-link" href="https://github.com/kmshdev" target="_blank" rel="noreferrer" aria-label="KMSH on GitHub"><Github size={18}/></a></div>{:else}    <div class="sidebar-bottom"><button class:active={sourcesOpen} class="source-nav" title="Connected sources" onclick={() => { sourcesOpen = !sourcesOpen; mobileNav = false; }}><Cable size={16} /><span>Connected sources</span><span class:has-error={sourceErrors.length} class="source-count">5</span></button><div class="sync-footer"><span class:offline={!connected} class="live-dot"></span><span>{connected ? 'Live sync enabled' : 'Connecting…'}<small>Local · every 60 seconds</small></span></div><div class="profile"><span class="profile-avatar">K</span><span>kmshdev<small>Personal</small></span><span class="profile-local">LOCAL</span></div></div>{/if}
   </aside>
   <main inert={mobileNav} id="registry-main" tabindex="-1" class="workspace" class:overview-mode={view === 'overview'}>
     <header class="terminal-nav">
       <button class="mobile-menu" aria-label="Open navigation" onclick={() => mobileNav = true}><Menu size={14}/></button>
       <button class="terminal-logo" aria-label="Home" onclick={()=>{navigate('all');view='overview';}}>▰</button>
       <div class="terminal-links" role="tablist" tabindex="-1" aria-label="Registry view" onkeydown={tabKeydown}>
-        {#each [{id:'overview',key:'O',label:'Overview'},{id:'list',key:'I',label:'Inventory'},{id:'map',key:'M',label:'Map'},{id:'activity',key:'A',label:'Activity'}] as tab}
+        {#each [{id:'overview',key:'O',label:'Overview'},{id:'list',key:'I',label:'Inventory'},{id:'map',key:'M',label:'Map'},...(publicShowcase?[]:[{id:'activity',key:'A',label:'Activity'}])] as tab}
           <button role="tab" tabindex={view===tab.id?0:-1} aria-selected={view===tab.id&&!sourcesOpen} onclick={()=>{if(tab.id==='overview')navigate('all');view=tab.id as typeof view;sourcesOpen=false;selectedId='';window.scrollTo({top:0});}}><span>[{tab.key}]</span> {tab.label}</button>
         {/each}
       </div>
       <div class="terminal-console"><button aria-expanded={consoleOpen} aria-controls="console-actions" onclick={()=>consoleOpen=!consoleOpen}>[C] <span>Console</span> {consoleOpen?'−':'+'}</button>
-        {#if consoleOpen}<div id="console-actions" class="console-actions"><span class="console-status"><i class="live-dot" class:offline={!connected}></i>{connected?'Registry connected':'Registry offline'}</span><button onclick={()=>{showAdd=true;consoleOpen=false;}}><Plus size={14}/>Add resource</button><button disabled={refreshing} onclick={()=>{refresh();consoleOpen=false;}}><RefreshCw size={14}/>{refreshing?'Refreshing…':'Refresh all sources'}</button><button disabled={loading} onclick={()=>{exportData();consoleOpen=false;}}><Download size={14}/>Export inventory</button><button aria-pressed={soundEnabled} onclick={()=>soundEnabled=toggleSound()}>Sound {soundEnabled?'on':'off'}</button><button onclick={()=>{sourcesOpen=true;consoleOpen=false;}}>Connected sources</button></div>{/if}
+        {#if consoleOpen}<div id="console-actions" class="console-actions"><span class="console-status"><i class="live-dot" class:offline={!connected}></i>{publicShowcase?'Public discoveries':connected?'Registry connected':'Registry offline'}</span>{#if !publicShowcase}<button onclick={()=>{showAdd=true;consoleOpen=false;}}><Plus size={14}/>Add resource</button><button disabled={refreshing} onclick={()=>{refresh();consoleOpen=false;}}><RefreshCw size={14}/>{refreshing?'Refreshing…':'Refresh all sources'}</button>{/if}<button disabled={loading} onclick={()=>{exportData();consoleOpen=false;}}><Download size={14}/>Export inventory</button><button aria-pressed={soundEnabled} onclick={()=>soundEnabled=toggleSound()}>Sound {soundEnabled?'on':'off'}</button>{#if !publicShowcase}<button onclick={()=>{sourcesOpen=true;consoleOpen=false;}}>Connected sources</button>{/if}</div>{/if}
       </div>
     </header>
-    <div class="page-heading" class:home-heading={view==='overview' && !sourcesOpen}><div><div class="route-breadcrumb"><button onclick={()=>{navigate('all');view='overview';}}>Workspace</button><ChevronRight size={14}/><span>{sourcesOpen ? 'Sources' : view==='overview' ? 'Overview' : sectionTitle}</span></div><h1>{sourcesOpen ? 'Connected sources' : view === 'overview' ? 'Capability overview' : view === 'list' ? sectionTitle : view === 'map' ? 'Capability map' : 'Activity log'}<span class="title-count">{(sourcesOpen?data.sources.length:filtered.length).toLocaleString()}</span></h1></div><Badge label={refreshing ? 'Syncing' : connected ? 'Live registry' : 'Offline'} tone={connected?'success':'warning'} dot /></div>
+    <div class="page-heading" class:home-heading={view==='overview' && !sourcesOpen}><div><div class="route-breadcrumb"><button onclick={()=>{navigate('all');view='overview';}}>Workspace</button><ChevronRight size={14}/><span>{sourcesOpen ? 'Sources' : view==='overview' ? 'Overview' : sectionTitle}</span></div><h1>{sourcesOpen ? 'Connected sources' : view === 'overview' ? 'Capability overview' : view === 'list' ? sectionTitle : view === 'map' ? 'Capability map' : 'Activity log'}<span class="title-count">{(sourcesOpen?data.sources.length:filtered.length).toLocaleString()}</span></h1></div><Badge label={publicShowcase?'Public collection':refreshing ? 'Syncing' : connected ? 'Live registry' : 'Offline'} tone={publicShowcase?'info':connected?'success':'warning'} dot /></div>
     {#if error}<div class="error-banner" role="alert"><AlertCircle size={15} />{error}<button onclick={() => load()}>Retry</button></div>{/if}
     {#if sourceErrors.length && !sourcesOpen}<button class="error-banner" onclick={() => sourcesOpen = true}><AlertCircle size={15} />{sourceErrors.length} source unavailable · retained last successful data<ArrowUpRight size={14} /></button>{/if}
     <div class="content-shell" class:overview-content={view === 'overview'} class:with-inspector={Boolean(selected) && !sourcesOpen}>
@@ -208,8 +215,8 @@
           <div class="sources-list">{#each data.sources.filter(source => source.id !== 'custom') as source}<div class="source-row"><span class="source-logo"><ToolIcon kind={{ cli: 'CLI', brew: 'Toolchain', apps: 'Mac app', agents: 'Agent', github: 'Repository' }[source.id] ?? ''} size={22} /></span><div><h3>{source.name}</h3><p>{source.count.toLocaleString()} records <span>·</span> {relative(source.updatedAt)}</p>{#if source.error}<p class="source-error">{source.error}</p>{/if}</div><span class:unhealthy={source.status === 'error'} class="source-health"><i></i>{source.status}</span><button class="icon-button" title={`Refresh ${source.name}`} aria-label={`Refresh ${source.name}`} disabled={source.status === 'refreshing'} onclick={() => refresh(source.id)}><RefreshCw size={15} /></button></div>{/each}<div class="schedule-line"><Activity size={14} /><span>Local sources: 60s</span><span>GitHub: 15m</span></div></div>
         {:else}
 
-          {#if view !== 'activity' && view !== 'overview'}<div class="filter-bar"><label class="search"><Search size={15} /><input aria-label="Search resources" placeholder="Search your resources…" bind:value={query} />{#if query}<button class="icon-button" title="Clear search" aria-label="Clear search" onclick={() => query = ''}><X size={13} /></button>{/if}</label>{#if minimumStars > 0}<button class="active-lens" title="Clear popularity filter" onclick={() => minimumStars = 0}>≥ {minimumStars.toLocaleString()} stars<X size={12} /></button>{/if}<label class="filter-select"><Filter size={13} /><select aria-label="Filter capability" bind:value={category}><option value="all">All capabilities</option>{#each data.categories as name}<option value={name}>{name}</option>{/each}</select></label><label class="filter-select status-filter"><span class="tiny-dot"></span><select aria-label="Filter status" bind:value={status}><option value="all">All status</option><option>Installed</option><option>Starred</option><option>Cached</option><option>Saved</option></select></label>{#if view === 'list' && section !== 'github'}<label class="sort-select" title="Sort resources"><ArrowDownUp size={14} /><select aria-label="Sort resources" bind:value={sort}><option value="relevance">Recommended</option><option value="name">Name</option><option value="stars">Stars</option><option value="recent">Updated</option></select></label>{/if}</div>{/if}
-          {#if view === 'overview'}<EditorialHome {data} {connected} {loading} onselect={(id) => selectedId = id} onsearch={(text) => { navigate('all'); query = text; }} onsource={navigate} />
+          {#if view !== 'activity' && view !== 'overview'}<div class="filter-bar"><label class="search"><Search size={15} /><input aria-label="Search resources" placeholder="Search your resources…" bind:value={query} />{#if query}<button class="icon-button" title="Clear search" aria-label="Clear search" onclick={() => query = ''}><X size={13} /></button>{/if}</label>{#if minimumStars > 0}<button class="active-lens" title="Clear popularity filter" onclick={() => minimumStars = 0}>≥ {minimumStars.toLocaleString()} stars<X size={12} /></button>{/if}<label class="filter-select"><Filter size={13} /><select aria-label="Filter capability" bind:value={category}><option value="all">All capabilities</option>{#each data.categories as name}<option value={name}>{name}</option>{/each}</select></label>{#if !publicShowcase}<label class="filter-select status-filter"><span class="tiny-dot"></span><select aria-label="Filter status" bind:value={status}><option value="all">All status</option><option>Installed</option><option>Starred</option><option>Cached</option><option>Saved</option></select></label>{/if}{#if view === 'list' && section !== 'github'}<label class="sort-select" title="Sort resources"><ArrowDownUp size={14} /><select aria-label="Sort resources" bind:value={sort}><option value="relevance">Recommended</option><option value="name">Name</option><option value="stars">Stars</option><option value="recent">Updated</option></select></label>{/if}</div>{/if}
+          {#if view === 'overview'}<EditorialHome {data} {connected} {loading} {publicShowcase} onselect={(id) => selectedId = id} onsearch={(text) => { navigate('all'); query = text; }} onsource={navigate} />
           {:else if loading}<div class="empty-state"><RefreshCw size={25} class="spinning" /><h2>Loading registry</h2></div>
           {:else if view === 'activity'}<div class="activity-list">{#each data.activity as item}<div class="activity-row"><span class:activity-error={item.status === 'error'} class="activity-icon">{#if item.status === 'error'}<AlertCircle size={15} />{:else}<Check size={15} />{/if}</span><div><strong>{item.message}</strong><p>{item.detail}</p></div><time title={item.at}>{relative(item.at)}</time></div>{:else}<div class="empty-state"><Activity size={28} /><h2>No activity yet</h2><button class="text-button" onclick={() => refresh()}>Refresh sources</button></div>{/each}</div>
           {:else if !filtered.length}<div class="empty-state"><Search size={28} /><h2>{section === 'favorites' ? 'No favorites yet' : section === 'custom' ? 'Your collection is empty' : 'No matching resources'}</h2>{#if section === 'custom'}<button class="text-button" onclick={() => showAdd = true}>Add resource</button>{:else}<button class="text-button" onclick={() => { query = ''; category = 'all'; status = 'all'; section = 'all'; minimumStars = 0; }}>View all resources</button>{/if}</div>
@@ -219,7 +226,7 @@
       </section>
       {#if selected && !sourcesOpen}<SpringModal wide={selected.source==='github'} title={selected.name} onclose={() => selectedId = ''}><Inspector entry={selected} {related} onclose={() => selectedId = ''} onfavorite={favorite} onsave={saveNotes} onselect={(id) => selectedId = id} onremove={remove} /></SpringModal>{/if}
     </div>
-    <footer class="workspace-footer"><span><span class:offline={!connected} class="live-dot"></span>{connected ? 'Registry connected' : 'Reconnecting to registry'}</span><span>{#if data.revision<0}{loading?'Loading your inventory…':'Snapshot unavailable'}{:else}{data.entries.filter(entry => entry.source !== 'github').length.toLocaleString()} local records <span class="footer-separator">/</span> {count('github').toLocaleString()} starred <span class="footer-separator">/</span> Revision {data.revision}{/if}</span></footer>
+    {#if publicShowcase}<footer class="workspace-footer"><span>A personal collection of public repositories</span><span>{data.entries.length.toLocaleString()} discoveries · KMSH.DEV</span></footer>{:else}    <footer class="workspace-footer"><span><span class:offline={!connected} class="live-dot"></span>{connected ? 'Registry connected' : 'Reconnecting to registry'}</span><span>{#if data.revision<0}{loading?'Loading your inventory…':'Snapshot unavailable'}{:else}{data.entries.filter(entry => entry.source !== 'github').length.toLocaleString()} local records <span class="footer-separator">/</span> {count('github').toLocaleString()} starred <span class="footer-separator">/</span> Revision {data.revision}{/if}</span></footer>{/if}
   </main>
 </div>
 <Toaster position="bottom-right" theme="dark" closeButton richColors offset="48px" toastOptions={{class:'registry-toast'}} />

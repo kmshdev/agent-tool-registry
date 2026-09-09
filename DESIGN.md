@@ -47,3 +47,9 @@ Earlier pale themes, the full-height rail, and the bounded 2560px shell were rej
 Verification evidence is recorded in ignored `.agent/taste-redesign/`: desktop, 2847px ultrawide, and 390px mobile screenshots; interaction and error-recovery checks; reduced-motion behavior; type/build/test logs; and accessibility findings. Acceptance is based on those checks, not a self-assigned visual score. The user's visual review remains the aesthetic acceptance decision.
 
 The preceding Taste audit passed type/lint/build checks and 12 regression tests. The subsequent terminal-header and project-preview pass records its checks in `.agent/header-redesign/`. The audited home, inventory, map, source-health, and CLI-detail views have no failing accessibility audits. Mobile-throttled cold-load performance remains a documented optimization item (Lighthouse 65); layout shift improved to .076. This is separate from visual acceptance.
+
+## Public showcase
+
+The Vercel build preserves the visual system but uses a published GitHub-only snapshot. The four feature sections and source rail become discovery categories, with counts drawn from that snapshot. The ticker says Collection rather than Live. Activity, source refresh, installed-tool views, favorites, notes, and add/remove controls are absent. Repository details retain public metadata and links to GitHub and the project website. Local mode retains all workbench behavior.
+
+The public data contract and deployment ownership are documented in DEPLOYMENT.md. Public builds make no registry API or SSE requests. The exporter requires explicit public visibility and allowlists fields; the public collection is updated only through a reviewed export and deployment.

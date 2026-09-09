@@ -1,0 +1,9 @@
+.registry
+.agent
+.firecrawl
+.git
+node_modules
+dist
+.env
+.env.*
+public/fonts/berkeley-mono.woff2

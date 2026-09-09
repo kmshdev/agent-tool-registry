@@ -167,6 +167,7 @@ export function normalizeStar(item) {
     owner: repo.owner?.login ?? repo.full_name.split("/")[0],
     description: repo.description ?? "",
     source: "github",
+    isPublic: repo.private === false,
     kind: "Repository",
     status: "Starred",
     category: classify([repo.name, repo.description, ...(repo.topics ?? [])].join(" ")),

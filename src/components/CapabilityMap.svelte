@@ -2,6 +2,7 @@
   import { SvelteFlow, Background, BackgroundVariant, Controls, type Node, type Edge } from '@xyflow/svelte';
   import '@xyflow/svelte/dist/style.css';
   import RegistryNode from './RegistryNode.svelte';
+  import { publicShowcase } from '../lib/runtime';
   import { color, type Entry } from '../lib/types';
   let { entries, selected, onselect }: { entries: Entry[]; selected: string; onselect: (id: string) => void } = $props();
   let viewport = $state(1024);
@@ -12,7 +13,7 @@
   let ordered = $derived([...entries].sort((a, b) => (Number(b.favorite) || 0) - (Number(a.favorite) || 0) || ((priority.indexOf(a.name) + 1 || 1000) - (priority.indexOf(b.name) + 1 || 1000)) || Number(a.source === 'github') - Number(b.source === 'github') || a.name.localeCompare(b.name)));
   let groups = $derived([...new Set(ordered.map((entry) => entry.category))].slice(0, compact ? 2 : 3));
   let graph = $derived.by(() => {
-    const nodes: Node[] = [{ id: 'root', type: 'registry', position: compact ? { x: 85, y: 0 } : { x: 0, y: Math.max(0, groups.length * 115 - 50) }, data: { label: 'Your toolkit', subtitle: `${entries.length.toLocaleString()} matching records`, color: '#a7d2b5', root: true, compact } }];
+    const nodes: Node[] = [{ id: 'root', type: 'registry', position: compact ? { x: 85, y: 0 } : { x: 0, y: Math.max(0, groups.length * 115 - 50) }, data: { label: publicShowcase?'Open-source discoveries':'Your toolkit', subtitle: `${entries.length.toLocaleString()} matching records`, color: '#a7d2b5', root: true, compact } }];
     const edges: Edge[] = [];
     for (const [index, category] of groups.entries()) {
       const id = `category:${category}`;
@@ -30,7 +31,7 @@
 </script>
 <svelte:window bind:innerWidth={viewport} />
 <div class="map" aria-label="Capability relationship map">
-  <div class="map-label"><span class="live-dot"></span>CAPABILITY MAP <span class="map-sub">/ {graph.nodes.length - groups.length - 1} tools shown</span></div>
+  <div class="map-label"><span class="live-dot"></span>CAPABILITY MAP <span class="map-sub">/ {graph.nodes.length - groups.length - 1} {publicShowcase?'repositories':'tools'} shown</span></div>
   {#key `${compact}:${groups.join('|')}`}
     <SvelteFlow nodes={graph.nodes} edges={graph.edges} {nodeTypes} fitView fitViewOptions={fitOptions} minZoom={0.25} maxZoom={1.7} nodesDraggable={false} nodesConnectable={false} colorMode="dark" onnodeclick={({ node }) => { if (!node.id.startsWith('category:') && node.id !== 'root') onselect(node.id); }} proOptions={{ hideAttribution: false }}>
       <Background variant={BackgroundVariant.Dots} gap={24} size={0.5} patternColor="#426177" />

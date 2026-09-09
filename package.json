@@ -10,7 +10,9 @@
     "check": "vp check src server scripts vite.config.ts && svelte-check --tsconfig ./tsconfig.json",
     "start": "node server/serve.mjs",
     "registry": "node scripts/registry.mjs",
-    "test": "vp test"
+    "test": "vp test",
+    "build:showcase": "vp build --mode showcase",
+    "export:showcase": "node scripts/export-showcase.mjs"
   },
   "dependencies": {
     "@iconify-json/ph": "^1.2.2",

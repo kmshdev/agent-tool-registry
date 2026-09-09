@@ -10,3 +10,7 @@ dist/
 .vite/
 
 public/fonts/berkeley-mono.woff2
+
+.vercel/
+.vercel
+.env*
