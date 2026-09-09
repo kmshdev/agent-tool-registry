@@ -127,6 +127,34 @@ describe("API boundaries", () => {
       }),
     ).rejects.toThrow();
   });
+  it("compresses large snapshots only when gzip is accepted and preserves their data", async () => {
+    const entry = {
+      ...cli("large-tool"),
+      description: "A detailed capability description. ".repeat(100),
+    };
+    const registry = await make({ cli: async () => [entry] });
+    await registry.refresh("cli");
+    const server = createServer(handler(registry));
+    await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const url = `http://127.0.0.1:${server.address().port}/api/registry`;
+    try {
+      const compressed = await fetch(url, { headers: { "Accept-Encoding": "gzip" } });
+      expect(compressed.headers.get("content-encoding")).toBe("gzip");
+      expect(compressed.headers.get("vary")).toBe("Accept-Encoding");
+      expect(compressed.headers.get("cache-control")).toBe("no-store");
+      const compressedData = await compressed.json();
+      for (const encoding of ["identity", "gzip;q=0, identity"]) {
+        const plain = await fetch(url, { headers: { "Accept-Encoding": encoding } });
+        expect(plain.headers.get("content-encoding")).toBeNull();
+        expect(await plain.json()).toEqual(compressedData);
+      }
+      expect(compressedData.entries[0].description).toBe(entry.description);
+    } finally {
+      registry.stop();
+      server.closeAllConnections();
+      await new Promise((resolve) => server.close(resolve));
+    }
+  });
   it("serves searchable records, mutation errors, and revision events", async () => {
     const registry = await make({ cli: async () => [cli("rg")] });
     await registry.refresh("cli");

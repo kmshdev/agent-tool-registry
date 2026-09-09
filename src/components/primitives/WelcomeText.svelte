@@ -13,8 +13,9 @@
     return () => window.clearInterval(timer);
   });
 </script>
-<span class="welcome" aria-label={text}><span aria-hidden="true">{typed}<span class:done={typed===text} class="cursor">▍</span></span></span>
+<span class="welcome"><span class="accessible-text">{text}</span><span aria-hidden="true">{typed}<span class:done={typed===text} class="cursor">▍</span></span></span>
 <style>
+  .accessible-text{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
   .welcome{display:block;min-height:1.5em}.cursor{animation:blink .8s steps(1) 4}.done{opacity:0}
   @keyframes blink{50%{opacity:0}}
   @media(prefers-reduced-motion:reduce){.cursor{display:none}}

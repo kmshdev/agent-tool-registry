@@ -44,11 +44,11 @@ Berkeley Mono is served locally from the user's installed variable font (400–7
 
 [Svelte Sonner](https://github.com/wobsoriano/svelte-sonner) provides the actual toast queue, dismissal and accessible notifications. Its MIT license is included with the dependency.
 
-State chips are original Svelte adaptations of the observed Beautiful UI examples. The activity notification affordance is informed by Rare UI Notification Bell. Rare UI’s adapted animated counter remains in use in the feature section counts. Folder rail icons are original Svelte/CSS experiments informed by Urmauur’s file-format badges and frosted folder interaction; no upstream source code was copied.
+State chips are original Svelte adaptations of the observed Beautiful UI examples. The activity notification affordance is informed by Rare UI Notification Bell. The earlier Rare UI counter adaptation remains in source; active feature and ticker counts now use Number Flow. Folder rail icons are original Svelte/CSS experiments informed by Urmauur’s file-format badges and frosted folder interaction; no upstream source code was copied.
 
 ## Fancy Components
 
-Character proximity and typewriter behavior are adapted for Svelte from [Fancy Components](https://github.com/danielpetho/fancy).
+The retained character-proximity utility and active typewriter behavior were adapted for Svelte from [Fancy Components](https://github.com/danielpetho/fancy).
 
 MIT License
 
@@ -76,4 +76,10 @@ SOFTWARE.
 
 Motion, DialKit, Kugiri, and Cuelume are installed dependencies; their distributions include upstream licenses. Stripe, the AI Interface Museum, Blocks, Morphrig, and U.S. Graphics inform original layout and interaction code. Their site artwork and logos are not copied into the application.
 
-Snapattern artwork was exported from the user’s copy of [Snapatterns — 50 Seamless Pattern library](https://www.figma.com/community/file/1503771629691015061/snapatterns-50-seamless-pattern-library), by Briston. The source listing specifies [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), verified September 9, 2026. The app recolors, rotates, and crops the exported artwork for its feature panels. This artwork is licensed separately from application code.
+Snapattern artwork was exported from the user’s copy of [Snapatterns — 50 Seamless Pattern library](https://www.figma.com/community/file/1503771629691015061/snapatterns-50-seamless-pattern-library), by Briston. The source listing specifies [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), verified September 9, 2026. The app recolors, rotates, and crops these exports for feature panels, repository artwork, and the page background. Original animated SVG contours are layered over the masks. This artwork is licensed separately from application code.
+
+## Number Flow and Taste review
+
+[@number-flow/svelte](https://github.com/barvian/number-flow), discovered in the user's GitHub stars, supplies active animated counts. It is MIT licensed; the installed package includes its license. The [native Svelte documentation](https://number-flow.barvian.me/svelte) informed integration.
+
+The user-requested [Taste skill](https://github.com/Leonxlnx/taste-skill/blob/main/skills/taste-skill/SKILL.md) informed the September 9 design review, motion lifecycle, and verification workflow. The app retains its existing Svelte/CSS stack. No React component collection is represented as installed.

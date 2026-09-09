@@ -1,6 +1,7 @@
 <script lang="ts">
   import { X, Star, Copy, Check, ArrowUpRight, Trash2 } from '@lucide/svelte';
   import ToolIcon from './ToolIcon.svelte';
+  import PatternStudy from './PatternStudy.svelte';
   import { color, relative, type Entry } from '../lib/types';
   let { entry, related, onclose, onfavorite, onsave, onselect, onremove }: { entry: Entry; related: Entry[]; onclose: () => void; onfavorite: (entry: Entry) => void; onsave: (entry: Entry, notes: string) => Promise<void>; onselect: (id: string) => void; onremove: (entry: Entry) => void } = $props();
   let draft = $state('');
@@ -12,7 +13,7 @@
 </script>
 <aside class="inspector" aria-label="Tool details">
   <div class="inspector-top"><span>RECORD DETAILS</span><button class="icon-button" aria-label="Close details" title="Close details" onclick={onclose}><X size={15} /></button></div>
-  {#if entry.source==='github'}<div class="repo-detail-art" aria-hidden="true"><span>{entry.name.slice(0,2)}</span><span>{entry.language || 'Open source'}</span></div>{/if}
+  {#if entry.source==='github'}<div class="repo-detail-art" aria-hidden="true"><PatternStudy variant={entry.name.length%4}/></div>{/if}
   <div class="detail-heading"><span class="detail-symbol" style:color={color(entry.category)} style:background={`color-mix(in srgb, ${color(entry.category)} 12%, transparent)`}><ToolIcon kind={entry.kind} size={26} /></span><button class:starred={entry.favorite} class="icon-button favorite-large" aria-label={entry.favorite ? 'Remove favorite' : 'Add favorite'} title={entry.favorite ? 'Remove favorite' : 'Add favorite'} onclick={() => onfavorite(entry)}><Star size={17} fill={entry.favorite ? 'currentColor' : 'none'} /></button></div>
   <h2>{entry.name}</h2>
   {#if entry.owner}<span class="owner">{entry.owner} / {entry.name}</span>{/if}

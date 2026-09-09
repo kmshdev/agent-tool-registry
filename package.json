@@ -16,6 +16,7 @@
     "@iconify-json/ph": "^1.2.2",
     "@iconify/svelte": "^5.2.2",
     "@lucide/svelte": "^1.43.0",
+    "@number-flow/svelte": "^0.4.2",
     "@xyflow/svelte": "^1.5.2",
     "cuelume": "^0.2.2",
     "dialkit": "^2.0.1",

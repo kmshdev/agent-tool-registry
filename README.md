@@ -16,9 +16,9 @@ vp build
 vp run start
 ```
 
-The production port defaults to 4317 and supports `PORT`. The app listens on loopback only. Refreshing stops when the server stops; the last snapshot remains searchable offline. The preview command is a static build preview and does not provide the registry API; use `vp run start` for the complete app.
+The production port defaults to 4317 and supports `PORT`. The app listens on loopback only. Refreshing stops when the server stops; the last snapshot remains searchable through the offline CLI. The preview command is a static build preview and does not provide the registry API; use `vp run start` for the complete app.
 
-The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with capability panels, search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its detail modal. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
+The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with continuously animated pattern studies, an API-backed statistics ticker, compact search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its detail modal. Reduced motion uses native horizontal scrolling without a long pinned section. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
 
 ## Discover and query
 
@@ -28,7 +28,7 @@ The Overview uses a navy editorial layout inspired by the user-selected Stripe d
 - Agents and skills: `~/.codex/agents`, `~/.codex/skills`, `~/.agents/skills`, `~/.claude/agents`, `~/.claude/skills`, and the Codex plugin cache. Cached plugin entries are labeled `Cached`; presence does not prove activation. Symlinked directories are deduplicated.
 - GitHub: every page of the authenticated user's starred repositories, using the existing `gh` login. A starred repository is a candidate, not proof of installation. No connector credentials enter the browser.
 
-Local sources refresh every 60 seconds; GitHub refreshes every 15 minutes. Manual refresh is available per source or globally. Server-sent events update the UI, with a 15-second polling fallback. Source failures retain the last good data and publish an error with the last successful timestamp. Successful rescans remove missing detections. Annotations survive rescans and restarts.
+Local sources refresh every 60 seconds; GitHub refreshes every 15 minutes. Manual refresh is available per source or globally. Large JSON responses use negotiated gzip compression while retaining `no-store` caching. Server-sent events announce revisions; the UI fetches only when an event is newer than its snapshot, with a 15-second polling fallback. Source failures retain the last good data and publish an error with the last successful timestamp. Successful rescans remove missing detections. Annotations survive rescans and restarts.
 
 The totals count **source records**, not unique products: a CLI, Homebrew package, and app can describe the same product. Capability labels are inferred from source metadata or a small curated mapping in `server/catalog.mjs`. The graph shows category membership for a bounded sample, not dependency or execution relationships. All matching records remain in Inventory.
 
@@ -57,7 +57,7 @@ vp test
 vp build
 ```
 
-Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, and live revision events. Browser verification artifacts belong in `.agent/redesign/`.
+Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, and live revision events. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/taste-redesign/`.
 
 This application lives in its own `tool-registry` directory. Projects in the parent directory are outside its build and check scope. See `THIRD_PARTY_NOTICES.md` for template and component attribution.
 

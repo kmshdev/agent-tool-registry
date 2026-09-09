@@ -30,19 +30,20 @@
 </script>
 <dialog bind:this={dialog} class="spring-dialog" aria-label={title} oncancel={(event)=>{ event.preventDefault(); onclose(); }} onclick={(event)=>{ if(event.target===dialog) onclose(); }} style={`--overlay-opacity:${values.overlayOpacity}`}>
   <div bind:this={panel} class="spring-panel" class:wide style:border-radius={`${values.borderRadius}px`}>
-    <header><h2>{title}</h2><button type="button" class="icon-button" aria-label={`Close ${title}`} onclick={onclose}><MorphIcon icon="close"/></button></header>
+    <header><h2>{wide?'Resource details':title}</h2><button type="button" class="icon-button" aria-label={`Close ${title}`} onclick={onclose}><MorphIcon icon="close"/></button></header>
     {@render children()}
-    {#if tuning}<div class="modal-tuning"><DialRoot mode="inline" theme="dark" productionEnabled defaultOpen /></div>{/if}
+    {#if tuning}<details class="modal-tuning"><summary>Motion controls</summary><DialRoot mode="inline" theme="dark" productionEnabled defaultOpen /></details>{/if}
   </div>
 </dialog>
 <style>
   .spring-dialog{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:24px;border:0;background:transparent;overflow:auto;color:inherit}
   .spring-dialog[open]{display:grid;place-items:center}
   .spring-dialog::backdrop{background:rgb(18 22 31 / var(--overlay-opacity))}
-  .spring-panel{width:min(100%,640px);background:var(--surface,#fff);padding:28px;box-shadow:0 24px 100px #171b2326}
+  .spring-panel{width:min(100%,640px);background:var(--surface,#fff);padding:28px;border:1px solid var(--line);box-shadow:0 24px 100px #0005}
   .spring-panel.wide{width:min(100%,1180px)}
-  header{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:24px}
-  h2{margin:0;font-size:24px;line-height:1.25}
-  .modal-tuning{margin-top:24px;border-top:1px solid #dedee3;padding-top:16px}
+  header{position:sticky;top:-28px;z-index:2;background:var(--surface);padding:12px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:24px}
+  h2{margin:0;font-size:18px;line-height:1.25}
+  .modal-tuning{margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
+  summary{cursor:pointer;font:12px var(--mono);color:var(--muted);padding-bottom:12px}
   @media(max-width:600px){.spring-dialog{padding:12px}.spring-panel{padding:20px}}
 </style>

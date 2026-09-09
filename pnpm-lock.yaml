@@ -29,6 +29,9 @@ importers:
       '@lucide/svelte':
         specifier: ^1.43.0
         version: 1.43.0(svelte@5.57.0)
+      '@number-flow/svelte':
+        specifier: ^0.4.2
+        version: 0.4.2(svelte@5.57.0)
       '@xyflow/svelte':
         specifier: ^1.5.2
         version: 1.6.6(svelte@5.57.0)
@@ -127,6 +130,11 @@ packages:
     resolution: {integrity: sha512-IfxS4hVxojnafzFKkQGzndoM6yUODmGc07I0h6R/1SlwDoZwd/5gl90zHz+fTaBVLZo7uE5sPDySFGiK4iMQKw==}
     peerDependencies:
       svelte: ^5
+
+  '@number-flow/svelte@0.4.2':
+    resolution: {integrity: sha512-svlhRTdBXl1MKfRcrCllqvSZkb2qt0Ep+qEh3TUAcv8E4pnf9wJfhKzx5ISKZcFbpS117i+257U4LHyuTYdTuA==}
+    peerDependencies:
+      svelte: ^4 || ^5
 
   '@oxc-project/runtime@0.146.0':
     resolution: {integrity: sha512-lbXHIpZ1MmK6zuw5txlMdIZ2waLVUIU5Gnm3sEuwJOiqDfQfbtjeHscatmeBoxbv8+If9LFM6PGh/3DcDWYIYw==}
@@ -1029,6 +1037,9 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  number-flow@0.6.2:
+    resolution: {integrity: sha512-MCnImG4Q5vPwhSXnov56nOuyyKn6LC+Qd7II1UiKc+ACRtug5iAtn0+CwXNxM38AC5lSowEY+oYEtZX2qMnUyw==}
+
   obug@2.2.1:
     resolution: {integrity: sha512-XrsrhT5sybtKI6wakr2SPOlGZWWYbUXZ7a0jT8/QOeAPau+1X/bSegNe5YR75oJmEZQbKningirmGOEJCIk61Q==}
     engines: {node: '>=12.20.0'}
@@ -1309,6 +1320,12 @@ snapshots:
 
   '@lucide/svelte@1.43.0(svelte@5.57.0)':
     dependencies:
+      svelte: 5.57.0
+
+  '@number-flow/svelte@0.4.2(svelte@5.57.0)':
+    dependencies:
+      esm-env: 1.2.2
+      number-flow: 0.6.2
       svelte: 5.57.0
 
   '@oxc-project/runtime@0.146.0': {}
@@ -1913,6 +1930,10 @@ snapshots:
   mrmime@2.0.1: {}
 
   nanoid@3.3.18: {}
+
+  number-flow@0.6.2:
+    dependencies:
+      esm-env: 1.2.2
 
   obug@2.2.1: {}
 

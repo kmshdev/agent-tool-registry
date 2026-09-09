@@ -1,10 +1,28 @@
+import { gzip, constants } from "node:zlib";
+
 const send = (res, status, payload) => {
-  res.writeHead(status, {
+  const data = Buffer.from(JSON.stringify(payload));
+  const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store",
     "X-Content-Type-Options": "nosniff",
+    Vary: "Accept-Encoding",
+  };
+  const acceptsGzip = (res.req.headers["accept-encoding"] ?? "").split(",").some((part) => {
+    const [encoding, ...parameters] = part.trim().toLowerCase().split(";");
+    const quality = parameters.find((value) => value.trim().startsWith("q="));
+    return encoding === "gzip" && (!quality || Number(quality.trim().slice(2)) > 0);
   });
-  res.end(JSON.stringify(payload));
+  if (data.length >= 1024 && acceptsGzip) {
+    gzip(data, { level: constants.Z_BEST_SPEED }, (error, compressed) => {
+      if (res.destroyed) return;
+      res.writeHead(status, error ? headers : { ...headers, "Content-Encoding": "gzip" });
+      res.end(error ? data : compressed);
+    });
+  } else {
+    res.writeHead(status, headers);
+    res.end(data);
+  }
 };
 export function trustedRequest(req) {
   if (!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host ?? "")) return false;

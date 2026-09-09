@@ -1,50 +1,57 @@
 import { splitText, type TextSplit } from "kugiri";
 
-/** Kugiri owns only the split; this action owns animation, resizing and cleanup. */
+/** Replay a masked word reveal when a heading enters the viewport. */
 export function revealText(node: HTMLElement) {
-  let disposed = false;
   let split: TextSplit | undefined;
   let animations: Animation[] = [];
-  let observer: ResizeObserver | undefined;
-  let frame = 0;
-  void document.fonts.ready.then(() => {
-    if (disposed || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    split = splitText(node, { type: ["words"], mask: "words" });
-    animations = split.words.map((word, i) =>
-      word.animate(
-        [
-          { opacity: 0, transform: "translateY(100%)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        { duration: 500, delay: i * 45, easing: "cubic-bezier(.22,1,.36,1)", fill: "backwards" },
-      ),
-    );
-    void Promise.all(animations.map((item) => item.finished))
-      .then(() => {
-        split?.revert();
-        split = undefined;
-      })
-      .catch(() => {});
-    let width = node.clientWidth;
-    observer = new ResizeObserver(() => {
-      if (width === node.clientWidth) return;
-      width = node.clientWidth;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        animations.forEach((item) => item.cancel());
-        split?.revert();
-        split = undefined;
-      });
-    });
-    observer.observe(node);
-  });
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      animations.forEach((a) => a.cancel());
+      split?.revert();
+      split = undefined;
+      if (!entry.isIntersecting || reduce.matches) return;
+      split = splitText(node, { type: ["words"], mask: "words" });
+      animations = split.words.map((word, i) =>
+        word.animate(
+          [
+            { opacity: 0, transform: "translateY(105%) rotate(2deg)" },
+            { opacity: 1, transform: "translateY(0) rotate(0)" },
+          ],
+          { duration: 650, delay: i * 55, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" },
+        ),
+      );
+      const current = split;
+      void Promise.all(animations.map((a) => a.finished))
+        .then(() => {
+          if (split === current) {
+            split?.revert();
+            split = undefined;
+          }
+        })
+        .catch(() => {});
+    },
+    { threshold: 0.25 },
+  );
+  observer.observe(node);
   return {
     destroy() {
-      disposed = true;
-      observer?.disconnect();
-      cancelAnimationFrame(frame);
-      animations.forEach((item) => item.cancel());
+      observer.disconnect();
+      animations.forEach((a) => a.cancel());
       split?.revert();
+    },
+  };
+}
+
+/** Pause decorative loops outside the viewport. */
+export function inViewMotion(node: HTMLElement) {
+  const observer = new IntersectionObserver(([entry]) =>
+    node.classList.toggle("in-view", entry.isIntersecting),
+  );
+  observer.observe(node);
+  return {
+    destroy() {
+      observer.disconnect();
     },
   };
 }
