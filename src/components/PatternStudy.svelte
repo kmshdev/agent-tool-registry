@@ -23,7 +23,7 @@
 .study-1{--ink:#8fe3bc;--ground:#07332f}.study-2{--ink:#f6c278;--ground:#362b20}.study-3{--ink:#d5b2f1;--ground:#292440}
 .study-surface{position:absolute;inset:-25%;background:var(--ink);mask-image:var(--study-mask);mask-size:cover;opacity:.1}
 .study-sculpture{position:absolute;inset:8%;width:84%;height:84%;stroke:currentColor;stroke-width:.7;overflow:visible}
-.study-coordinate{position:absolute;bottom:12px;left:14px;font:9px var(--mono);opacity:1}
+.study-coordinate{position:absolute;bottom:12px;left:14px;font:var(--type-10) var(--mono);opacity:1}
 @media(prefers-reduced-motion:no-preference){
 .study-surface{animation:drift 26s ease-in-out infinite alternate;animation-play-state:paused}
 .study-sculpture{animation:sculpt 12s ease-in-out infinite alternate;animation-play-state:paused}

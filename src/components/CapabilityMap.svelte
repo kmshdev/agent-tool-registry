@@ -41,8 +41,8 @@
   <div class="map-legend"><span>Category membership</span>{#each groups as category}<span><i style:background={color(category)}></i>{category}</span>{/each}</div>
 </div>
 <style>
-  .map :global(.svelte-flow){--xy-background-color:#062337}.map{position:relative;height:100%;min-height:380px;background:#062337}.map-label{position:absolute;left:24px;top:22px;z-index:2;display:flex;align-items:center;gap:8px;font-size:12px;color:#87aac2}.map-sub{color:#62728b;margin-left:5px}.map-legend{position:absolute;bottom:22px;right:20px;z-index:2;display:flex;gap:12px;font-size:12px;color:#87aac2;flex-wrap:wrap;max-width:70%;justify-content:flex-end}.map-legend span{display:flex;align-items:center;gap:5px}.map-legend i{width:5px;height:5px;border-radius:50%}
-  :global(.svelte-flow__attribution){font-size:9px!important;background:transparent!important;color:#838c85!important}
+  .map :global(.svelte-flow){--xy-background-color:#062337}.map{position:relative;height:100%;min-height:380px;background:#062337}.map-label{position:absolute;left:24px;top:22px;z-index:2;display:flex;align-items:center;gap:8px;font-size:var(--type-12);color:#87aac2}.map-sub{color:#62728b;margin-left:5px}.map-legend{position:absolute;bottom:22px;right:20px;z-index:2;display:flex;gap:12px;font-size:var(--type-12);color:#87aac2;flex-wrap:wrap;max-width:70%;justify-content:flex-end}.map-legend span{display:flex;align-items:center;gap:5px}.map-legend i{width:5px;height:5px;border-radius:50%}
+  :global(.svelte-flow__attribution){font-size:var(--type-10)!important;background:transparent!important;color:#838c85!important}
   :global(.svelte-flow__controls){box-shadow:none!important;border:1px solid #3b413c;border-radius:5px;overflow:hidden;bottom:20px;left:12px}
   :global(.svelte-flow__controls-button){background:#123448!important;color:#bcd9e8!important;border-bottom:1px solid #315269!important;width:40px!important;height:40px!important}
   @media(max-width:700px){.map-label{left:14px}.map-legend{display:none}:global(.svelte-flow__controls){flex-direction:row!important}:global(.svelte-flow__controls-button){border-bottom:0!important;border-right:1px solid #3b413c!important}}
