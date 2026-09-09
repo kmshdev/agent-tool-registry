@@ -1,0 +1,39 @@
+{
+  "name": "build-for-codex",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
+    "check": "vp check src server scripts vite.config.ts && svelte-check --tsconfig ./tsconfig.json",
+    "start": "node server/serve.mjs",
+    "registry": "node scripts/registry.mjs",
+    "test": "vp test"
+  },
+  "dependencies": {
+    "@iconify-json/ph": "^1.2.2",
+    "@iconify/svelte": "^5.2.2",
+    "@lucide/svelte": "^1.43.0",
+    "@xyflow/svelte": "^1.5.2",
+    "cuelume": "^0.2.2",
+    "dialkit": "^2.0.1",
+    "kugiri": "^0.5.2",
+    "motion": "^13.2.0",
+    "smol-toml": "^1.8.0",
+    "svelte-sonner": "^1.2.1",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "@tsconfig/svelte": "^5.0.8",
+    "svelte": "^5.55.1",
+    "svelte-check": "^4.4.6",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "packageManager": "pnpm@10.11.0"
+}

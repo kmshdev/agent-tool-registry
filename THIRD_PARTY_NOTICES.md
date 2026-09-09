@@ -1,0 +1,79 @@
+# Third-party components
+
+## Svelte Flow template
+
+Started from [xyflow/vite-svelte-flow-template](https://github.com/xyflow/vite-svelte-flow-template), using Svelte 5 and `@xyflow/svelte`. Svelte Flow is MIT licensed, copyright xyflow. Its dependency distribution contains its license.
+
+## Beautiful UI
+
+The registry inventory rows, tool chips, and sidebar adapt the visual component patterns demonstrated at [beautifului.dev](https://www.beautifului.dev): Records Table, Tool Chips, and Sidebar Nav. These are original Svelte implementations informed by the observed component examples; no React package is represented as installed. The active layout combines these patterns with the editorial references described in DESIGN.md.
+
+## Rare UI Animated Counter
+
+`src/components/Counter.svelte` adapts the digit-wheel structure, 1.5em line height, easing, fade mask, and reduced-motion treatment from [Rare UI Animated Counter](https://github.com/swamimalode07/rare-ui/blob/main/components/ui/animated-counter.tsx), presented at [rareui.com/components](https://www.rareui.com/components). The Svelte version uses CSS transitions rather than React Motion and intentionally supports nonnegative integer counts only.
+
+MIT License
+
+Copyright (c) 2026 Swami Malode
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Icons and typography
+
+Navigation uses bundled Phosphor Bold SVGs (MIT) via Iconify, discovered through [Icônes](https://github.com/antfu-collective/icones). Other controls retain Lucide with stronger strokes. The logo is an original SVG interpretation of the supplied geometric reference.
+
+Berkeley Mono is served locally from the user's installed variable font (400–700), converted to WOFF2. The font file is ignored by Git and is not included in source distribution. It is not covered by this project's component licenses. System monospace is the fallback. The UI no longer requests Google Fonts.
+
+## Notifications and navigation
+
+[Svelte Sonner](https://github.com/wobsoriano/svelte-sonner) provides the actual toast queue, dismissal and accessible notifications. Its MIT license is included with the dependency.
+
+State chips are original Svelte adaptations of the observed Beautiful UI examples. The activity notification affordance is informed by Rare UI Notification Bell. Rare UI’s adapted animated counter remains in use in the feature section counts. Folder rail icons are original Svelte/CSS experiments informed by Urmauur’s file-format badges and frosted folder interaction; no upstream source code was copied.
+
+## Fancy Components
+
+Character proximity and typewriter behavior are adapted for Svelte from [Fancy Components](https://github.com/danielpetho/fancy).
+
+MIT License
+
+Copyright (c) 2024 Daniel Petho
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Motion libraries and design references
+
+Motion, DialKit, Kugiri, and Cuelume are installed dependencies; their distributions include upstream licenses. Stripe, the AI Interface Museum, Blocks, Morphrig, and U.S. Graphics inform original layout and interaction code. Their site artwork and logos are not copied into the application.
+
+Snapattern artwork was exported from the user’s copy of [Snapatterns — 50 Seamless Pattern library](https://www.figma.com/community/file/1503771629691015061/snapatterns-50-seamless-pattern-library), by Briston. The source listing specifies [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), verified September 9, 2026. The app recolors, rotates, and crops the exported artwork for its feature panels. This artwork is licensed separately from application code.

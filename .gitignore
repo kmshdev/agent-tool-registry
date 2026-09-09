@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.agent/
+.firecrawl/
+.registry/
+.env
+.env.*
+!.env.example
+*.log
+.vite/
+
+public/fonts/berkeley-mono.woff2
