@@ -3,12 +3,13 @@
   import SpringModal from './components/primitives/SpringModal.svelte';
   import { initializeSound, toggleSound, cue } from './lib/sound';
   let soundEnabled = $state(true);
+  let consoleOpen = $state(false);
   import { Toaster, toast } from 'svelte-sonner';
   import WorkIcon from './components/WorkIcon.svelte';
   import FolderIcon from './components/FolderIcon.svelte';
   import Badge from './components/Badge.svelte';
   import { parseRoute, routeHash } from './lib/routes';
-  import { Volume2, VolumeX, Layers, Search, Plus, RefreshCw, Download, Network, List, Activity, Star, Terminal, GitFork as Github, AppWindow, Bot, Blocks, ChevronDown, ChevronLeft, ChevronRight, ArrowUpRight, Menu, X, Check, Cable, FolderHeart, Filter, ArrowDownUp, AlertCircle } from '@lucide/svelte';
+  import { Layers, Search, Plus, RefreshCw, Download, Activity, Star, Terminal, GitFork as Github, AppWindow, Bot, Blocks, ChevronDown, ChevronLeft, ChevronRight, ArrowUpRight, Menu, X, Check, Cable, FolderHeart, Filter, ArrowDownUp, AlertCircle } from '@lucide/svelte';
   import EditorialHome from './components/EditorialHome.svelte';
   import StarTimeline from './components/StarTimeline.svelte';
   import RepoPreview from './components/RepoPreview.svelte';
@@ -50,7 +51,13 @@
     buttons[next].click();buttons[next].focus();
   }
   function globalKeydown(event: KeyboardEvent) {
-    if(event.key==='Escape'){showAdd=false;mobileNav=false;sourcesOpen=false;return;}
+    if(event.key==='Escape'){consoleOpen=false;showAdd=false;mobileNav=false;sourcesOpen=false;return;}
+    if (!event.ctrlKey && !event.metaKey && !event.altKey && !mobileNav && !document.querySelector('dialog[open]') && !(event.target as HTMLElement).closest('input,textarea,select,[contenteditable="true"]')) {
+      const shortcuts:Record<string,typeof view>={o:'overview',i:'list',m:'map',a:'activity'};
+      const next=shortcuts[event.key.toLowerCase()];
+      if(next){event.preventDefault();if(next==='overview')navigate('all');view=next;sourcesOpen=false;selectedId='';consoleOpen=false;window.scrollTo({top:0});}
+      if(event.key.toLowerCase()==='c'){event.preventDefault();consoleOpen=!consoleOpen;}
+    }
     if(event.key!=='Tab'||!mobileNav)return;
     const controls=Array.from(document.querySelectorAll<HTMLElement>('.sidebar a[href], .sidebar button:not(:disabled)')).filter(el=>el.getClientRects().length);
     const first=controls[0],last=controls[controls.length-1];
@@ -65,8 +72,7 @@
   let adding = $state(false);
   let routeReady = $state(false);
   let routeRevision = $state(0);
-  let seenActivity = $state('');
-  let unread = $derived(seenActivity ? Math.max(0,data.activity.findIndex(item=>item.id===seenActivity)) : data.activity.length);
+
   let sourcesOpen = $state(false);
   function routeMotion(node: HTMLElement, _key: string) {
     let animation: Animation | undefined;
@@ -166,7 +172,7 @@
 </script>
 
 <svelte:head><title>Build for Codex — Tool Registry</title><meta name="description" content="Your local tools, agents, applications, and GitHub discoveries." /><meta name="theme-color" content="#031a2b" /></svelte:head>
-<svelte:window onkeydown={globalKeydown} />
+<svelte:window onkeydown={globalKeydown} onpointerdown={(event)=>{if(!(event.target as Element).closest(".terminal-console"))consoleOpen=false;}} />
 <a class="skip-link" href="#registry-main" onclick={(event)=>{event.preventDefault();document.getElementById('registry-main')?.focus();}}>Skip to content</a>
 <div class="app-shell">
   {#if mobileNav}<button class="nav-scrim" aria-label="Close navigation" onclick={() => mobileNav = false}></button>{/if}
@@ -180,7 +186,18 @@
     <div class="sidebar-bottom"><button class:active={sourcesOpen} class="source-nav" title="Connected sources" onclick={() => { sourcesOpen = !sourcesOpen; mobileNav = false; }}><Cable size={16} /><span>Connected sources</span><span class:has-error={sourceErrors.length} class="source-count">5</span></button><div class="sync-footer"><span class:offline={!connected} class="live-dot"></span><span>{connected ? 'Live sync enabled' : 'Connecting…'}<small>Local · every 60 seconds</small></span></div><div class="profile"><span class="profile-avatar">K</span><span>kmshdev<small>Personal</small></span><span class="profile-local">LOCAL</span></div></div>
   </aside>
   <main inert={mobileNav} id="registry-main" tabindex="-1" class="workspace" class:overview-mode={view === 'overview'}>
-    <header class="topbar"><button class="icon-button mobile-menu" aria-label="Open navigation" onclick={() => mobileNav = true}><Menu size={18} /></button><div class="breadcrumb"><strong class="top-brand">Build <span>for Codex</span></strong><span class="workspace-edition">PERSONAL WORKSPACE</span></div><div class="topbar-right"><button class="text-button" aria-label={soundEnabled?'Sound on':'Sound off'} aria-pressed={soundEnabled} onclick={()=>{soundEnabled=toggleSound();}}><span class="sound-label">Sound {soundEnabled?'on':'off'}</span><span class="sound-icon" aria-hidden="true">{#if soundEnabled}<Volume2 size={14}/>{:else}<VolumeX size={14}/>{/if}</span></button><button class="icon-button activity-bell" title="Browse activity" aria-label="Browse activity" onclick={()=>{view='activity';sourcesOpen=false;selectedId='';seenActivity=data.activity[0]?.id ?? '';}}><WorkIcon name="activity" size={21}/>{#if unread>0}<i></i>{/if}</button><span class:offline={!connected} class="connection"><i></i>{connected ? 'Live' : 'Offline'}</span><button class="icon-button" title="Export filtered inventory" aria-label="Export inventory" onclick={exportData} disabled={loading}><Download size={16} /></button><button class="icon-button" class:spinning={refreshing} title="Refresh all sources" aria-label="Refresh all sources" disabled={refreshing} onclick={() => refresh()}><RefreshCw size={16} /></button><span class="top-divider"></span><button class="primary-button" onclick={() => showAdd = true}><Plus size={15} />Add resource</button></div></header>
+    <header class="terminal-nav">
+      <button class="mobile-menu" aria-label="Open navigation" onclick={() => mobileNav = true}><Menu size={14}/></button>
+      <button class="terminal-logo" aria-label="Home" onclick={()=>{navigate('all');view='overview';}}>▰</button>
+      <div class="terminal-links" role="tablist" tabindex="-1" aria-label="Registry view" onkeydown={tabKeydown}>
+        {#each [{id:'overview',key:'O',label:'Overview'},{id:'list',key:'I',label:'Inventory'},{id:'map',key:'M',label:'Map'},{id:'activity',key:'A',label:'Activity'}] as tab}
+          <button role="tab" tabindex={view===tab.id?0:-1} aria-selected={view===tab.id&&!sourcesOpen} onclick={()=>{if(tab.id==='overview')navigate('all');view=tab.id as typeof view;sourcesOpen=false;selectedId='';window.scrollTo({top:0});}}><span>[{tab.key}]</span> {tab.label}</button>
+        {/each}
+      </div>
+      <div class="terminal-console"><button aria-expanded={consoleOpen} aria-controls="console-actions" onclick={()=>consoleOpen=!consoleOpen}>[C] <span>Console</span> {consoleOpen?'−':'+'}</button>
+        {#if consoleOpen}<div id="console-actions" class="console-actions"><span class="console-status"><i class="live-dot" class:offline={!connected}></i>{connected?'Registry connected':'Registry offline'}</span><button onclick={()=>{showAdd=true;consoleOpen=false;}}><Plus size={14}/>Add resource</button><button disabled={refreshing} onclick={()=>{refresh();consoleOpen=false;}}><RefreshCw size={14}/>{refreshing?'Refreshing…':'Refresh all sources'}</button><button disabled={loading} onclick={()=>{exportData();consoleOpen=false;}}><Download size={14}/>Export inventory</button><button aria-pressed={soundEnabled} onclick={()=>soundEnabled=toggleSound()}>Sound {soundEnabled?'on':'off'}</button><button onclick={()=>{sourcesOpen=true;consoleOpen=false;}}>Connected sources</button></div>{/if}
+      </div>
+    </header>
     <div class="page-heading" class:home-heading={view==='overview' && !sourcesOpen}><div><div class="route-breadcrumb"><button onclick={()=>{navigate('all');view='overview';}}>Workspace</button><ChevronRight size={14}/><span>{sourcesOpen ? 'Sources' : view==='overview' ? 'Overview' : sectionTitle}</span></div><h1>{sourcesOpen ? 'Connected sources' : view === 'overview' ? 'Capability overview' : view === 'list' ? sectionTitle : view === 'map' ? 'Capability map' : 'Activity log'}<span class="title-count">{(sourcesOpen?data.sources.length:filtered.length).toLocaleString()}</span></h1></div><Badge label={refreshing ? 'Syncing' : connected ? 'Live registry' : 'Offline'} tone={connected?'success':'warning'} dot /></div>
     {#if error}<div class="error-banner" role="alert"><AlertCircle size={15} />{error}<button onclick={() => load()}>Retry</button></div>{/if}
     {#if sourceErrors.length && !sourcesOpen}<button class="error-banner" onclick={() => sourcesOpen = true}><AlertCircle size={15} />{sourceErrors.length} source unavailable · retained last successful data<ArrowUpRight size={14} /></button>{/if}
@@ -190,7 +207,7 @@
           <div class="view-tabs source-panel-bar"><h2 class="eyebrow">/ SOURCE HEALTH</h2><button class="icon-button" title="Close sources" aria-label="Close sources" onclick={() => sourcesOpen = false}><X size={16} /></button></div>
           <div class="sources-list">{#each data.sources.filter(source => source.id !== 'custom') as source}<div class="source-row"><span class="source-logo"><ToolIcon kind={{ cli: 'CLI', brew: 'Toolchain', apps: 'Mac app', agents: 'Agent', github: 'Repository' }[source.id] ?? ''} size={22} /></span><div><h3>{source.name}</h3><p>{source.count.toLocaleString()} records <span>·</span> {relative(source.updatedAt)}</p>{#if source.error}<p class="source-error">{source.error}</p>{/if}</div><span class:unhealthy={source.status === 'error'} class="source-health"><i></i>{source.status}</span><button class="icon-button" title={`Refresh ${source.name}`} aria-label={`Refresh ${source.name}`} disabled={source.status === 'refreshing'} onclick={() => refresh(source.id)}><RefreshCw size={15} /></button></div>{/each}<div class="schedule-line"><Activity size={14} /><span>Local sources: 60s</span><span>GitHub: 15m</span></div></div>
         {:else}
-          <div class="view-tabs"><div role="tablist" tabindex="-1" aria-label="Registry view" onkeydown={tabKeydown}><button role="tab" tabindex={view === 'overview'?0:-1} aria-selected={view === 'overview'} class:chosen={view === 'overview'} onclick={() => { navigate('all'); selectedId = ''; view = 'overview'; }}><Layers size={15} />Overview</button><button role="tab" tabindex={view === 'list'?0:-1} aria-selected={view === 'list'} class:chosen={view === 'list'} onclick={() => view = 'list'}><List size={15} />Inventory</button><button role="tab" tabindex={view === 'map'?0:-1} aria-selected={view === 'map'} class:chosen={view === 'map'} onclick={() => view = 'map'}><Network size={15} />Capability map</button><button role="tab" tabindex={view === 'activity'?0:-1} aria-selected={view === 'activity'} class:chosen={view === 'activity'} onclick={() => view = 'activity'}><Activity size={15} />Activity</button></div><span class="results-count">{#if data.revision<0}{loading?'Loading records…':'Records unavailable'}{:else}{(view === 'overview' ? data.entries.length : filtered.length).toLocaleString()} records{/if}</span></div>
+
           {#if view !== 'activity' && view !== 'overview'}<div class="filter-bar"><label class="search"><Search size={15} /><input aria-label="Search resources" placeholder="Search your resources…" bind:value={query} />{#if query}<button class="icon-button" title="Clear search" aria-label="Clear search" onclick={() => query = ''}><X size={13} /></button>{/if}</label>{#if minimumStars > 0}<button class="active-lens" title="Clear popularity filter" onclick={() => minimumStars = 0}>≥ {minimumStars.toLocaleString()} stars<X size={12} /></button>{/if}<label class="filter-select"><Filter size={13} /><select aria-label="Filter capability" bind:value={category}><option value="all">All capabilities</option>{#each data.categories as name}<option value={name}>{name}</option>{/each}</select></label><label class="filter-select status-filter"><span class="tiny-dot"></span><select aria-label="Filter status" bind:value={status}><option value="all">All status</option><option>Installed</option><option>Starred</option><option>Cached</option><option>Saved</option></select></label>{#if view === 'list' && section !== 'github'}<label class="sort-select" title="Sort resources"><ArrowDownUp size={14} /><select aria-label="Sort resources" bind:value={sort}><option value="relevance">Recommended</option><option value="name">Name</option><option value="stars">Stars</option><option value="recent">Updated</option></select></label>{/if}</div>{/if}
           {#if view === 'overview'}<EditorialHome {data} {connected} {loading} onselect={(id) => selectedId = id} onsearch={(text) => { navigate('all'); query = text; }} onsource={navigate} />
           {:else if loading}<div class="empty-state"><RefreshCw size={25} class="spinning" /><h2>Loading registry</h2></div>

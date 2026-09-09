@@ -1,10 +1,11 @@
 import { describe, it, expect, afterEach } from "vite-plus/test";
-import { mkdtemp, readFile, readdir, unlink, rmdir } from "node:fs/promises";
+import { mkdtemp, readFile, readdir, unlink, rmdir, mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { Registry } from "./registry.mjs";
 import { classify, normalizeStar } from "./catalog.mjs";
 import { trustedRequest, handler } from "./http.mjs";
+import { previewPath } from "./previews.mjs";
 import { createServer } from "node:http";
 import { configurationMetadata } from "./discover.mjs";
 
@@ -126,6 +127,43 @@ describe("API boundaries", () => {
         url: "https://user:password@example.com",
       }),
     ).rejects.toThrow();
+  });
+  it("serves only cached previews for known repositories and invalidates changed homepage URLs", async () => {
+    const entry = normalizeStar({
+      full_name: "owner/project",
+      name: "project",
+      html_url: "https://github.com/owner/project",
+      homepage: "https://example.com",
+    });
+    const registry = await make({ github: async () => [entry] });
+    await registry.refresh("github");
+    const cache = path.join(registry.directory, "previews");
+    await mkdir(cache);
+    const image = Buffer.from([255, 216, 255, 217]);
+    await writeFile(previewPath(registry.directory, entry), image);
+    const server = createServer(handler(registry));
+    await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const origin = `http://127.0.0.1:${server.address().port}`;
+    try {
+      const snapshot = await (await fetch(`${origin}/api/registry`)).json();
+      expect(snapshot.entries[0].homepage).toBe("https://example.com");
+      const response = await fetch(`${origin}${snapshot.entries[0].previewUrl}`);
+      expect(response.headers.get("content-type")).toBe("image/jpeg");
+      expect(Buffer.from(await response.arrayBuffer())).toEqual(image);
+      expect(
+        (await fetch(`${origin}/api/previews/${encodeURIComponent("../../registry.json")}`)).status,
+      ).toBe(404);
+      entry.homepage = "https://other.example.com";
+      await registry.refresh("github");
+      const updated = await (await fetch(`${origin}/api/registry`)).json();
+      expect(updated.entries[0].previewUrl).toBeUndefined();
+      expect((await fetch(`${origin}${snapshot.entries[0].previewUrl}`)).status).toBe(404);
+    } finally {
+      server.closeAllConnections();
+      await new Promise((resolve) => server.close(resolve));
+      for (const file of await readdir(cache)) await unlink(path.join(cache, file));
+      await rmdir(cache);
+    }
   });
   it("compresses large snapshots only when gzip is accepted and preserves their data", async () => {
     const entry = {

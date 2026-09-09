@@ -18,7 +18,7 @@ vp run start
 
 The production port defaults to 4317 and supports `PORT`. The app listens on loopback only. Refreshing stops when the server stops; the last snapshot remains searchable through the offline CLI. The preview command is a static build preview and does not provide the registry API; use `vp run start` for the complete app.
 
-The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with continuously animated pattern studies, an API-backed statistics ticker, compact search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its detail modal. Reduced motion uses native horizontal scrolling without a long pinned section. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
+The Overview uses a navy editorial layout inspired by the user-selected Stripe developer theme, with a fixed Stripe-style terminal navigation strip, a Berkeley Mono welcome and Space Grotesk tagline, mixed animated box drawings and pattern studies, an API-backed statistics ticker, compact search, and saved resources. GitHub stars appear on the home page and in Inventory as a pinned timeline: scrolling the page moves cards horizontally, and selecting a card opens its detail modal. Reduced motion uses native horizontal scrolling without a long pinned section. Inventory, the template-backed capability map, source health, and activity remain available. See DESIGN.md for typography and motion ownership.
 
 ## Discover and query
 
@@ -43,6 +43,19 @@ node scripts/registry.mjs refresh github
 
 Search, get, stats, and export read `.registry/registry.json` offline. Refresh calls the running API on port 4317. In the original workspace, the companion `tool-registry` skill in `~/.codex/skills/tool-registry` points Codex tasks to this query interface. A fresh clone does not install a global skill or modify shell configuration.
 
+## Project website previews
+
+GitHub imports retain each repository's HTTP(S) homepage. To capture previews for the 60 newest stars after a GitHub refresh completes:
+
+```sh
+vp exec playwright install chromium
+node scripts/capture-previews.mjs 60
+```
+
+The optional numeric limit selects newest starred records, including those without homepages; it defaults to 60 and is bounded at 2000. `PREVIEW_BROWSER_PATH` can select an existing Chromium executable. Captures use fresh unauthenticated browser contexts, block non-public destinations and WebSockets, and write only to ignored `.registry/previews/`. The command skips existing captures and reports per-site failures. Inspect captures for challenge, maintenance, or loading screens; remove unusable cached images with `trash` so the cards fall back to artwork. Reload the app after capturing. A changed homepage gets a different cache key; remove an existing capture to refresh it.
+
+The API advertises only available cached screenshots and serves them by known repository ID. It cannot capture an arbitrary URL or read an arbitrary path. Websites that have no homepage, fail capture, or lack a cached screenshot use animated box drawings or Snapatterns. Previews are local evidence and are not included in Git.
+
 ## Persistence and boundaries
 
 `.registry/registry.json` is a private local snapshot with annotations and bounded refresh history. Writes are serialized and atomically renamed. Keep one registry server running per directory. Back up this file to preserve favorites and notes. The snapshot and intermediate files are ignored. Do not publish them: they contain local paths and personal inventory.
@@ -57,7 +70,7 @@ vp test
 vp build
 ```
 
-Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, and live revision events. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/taste-redesign/`.
+Tests cover reconciliation, failed refresh retention, concurrency, annotation persistence, input validation, origin checks, negotiated snapshot compression, live revision events, and preview access/cache invalidation. Browser verification artifacts belong in task-specific ignored `.agent/` directories; the latest interface pass is in `.agent/header-redesign/`.
 
 This application lives in its own `tool-registry` directory. Projects in the parent directory are outside its build and check scope. See `THIRD_PARTY_NOTICES.md` for template and component attribution.
 

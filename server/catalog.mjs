@@ -172,6 +172,7 @@ export function normalizeStar(item) {
     category: classify([repo.name, repo.description, ...(repo.topics ?? [])].join(" ")),
     tags: repo.topics ?? [],
     url: repo.html_url,
+    homepage: /^https?:\/\//i.test(repo.homepage ?? "") ? repo.homepage : undefined,
     language: repo.language ?? "",
     stars: repo.stargazers_count ?? 0,
     archived: Boolean(repo.archived),

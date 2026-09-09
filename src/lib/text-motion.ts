@@ -33,9 +33,16 @@ export function revealText(node: HTMLElement) {
     },
     { threshold: 0.25 },
   );
+  const reset = () => {
+    animations.forEach((a) => a.cancel());
+    split?.revert();
+    split = undefined;
+  };
+  window.addEventListener("resize", reset);
   observer.observe(node);
   return {
     destroy() {
+      window.removeEventListener("resize", reset);
       observer.disconnect();
       animations.forEach((a) => a.cancel());
       split?.revert();
@@ -114,6 +121,34 @@ export function cursorProximity(node: HTMLElement) {
       container.removeEventListener("pointerleave", leave);
       node.textContent = original;
       node.removeAttribute("aria-label");
+    },
+  };
+}
+
+/** Reveal the whole card as it enters either edge of the scroll viewport. */
+export function revealCard(node: HTMLElement) {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  let animation: Animation | undefined;
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      animation?.cancel();
+      if (!entry.isIntersecting || reduce.matches) return;
+      const direction = entry.boundingClientRect.left > innerWidth / 2 ? 1 : -1;
+      animation = node.animate(
+        [
+          { opacity: 0, translate: `${direction * 34}px 28px`, filter: "blur(3px)" },
+          { opacity: 1, translate: "0 0", filter: "blur(0)" },
+        ],
+        { duration: 650, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" },
+      );
+    },
+    { threshold: 0.12 },
+  );
+  observer.observe(node);
+  return {
+    destroy() {
+      observer.disconnect();
+      animation?.cancel();
     },
   };
 }

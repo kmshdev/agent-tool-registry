@@ -10,6 +10,8 @@ export type Entry = {
   path?: string;
   paths?: string[];
   url?: string;
+  homepage?: string;
+  previewUrl?: string;
   owner?: string;
   language?: string;
   stars?: number;
