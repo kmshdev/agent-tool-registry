@@ -69,3 +69,5 @@ The reproducible worst case was a year jump mounting all 1,397 repository cards.
 Cold-load performance is separate: the pre-change public site scored 96 desktop / 92 mobile in Lighthouse. Development loaded a 7.8MB Lucide barrel module; icons now use individual supported package exports, and unused DialKit tuning is deferred. The earlier 65-point audit remains historical.
 
 The hero's animated line spans are inline blocks. Browser reproduction showed Kugiri's block line wrappers inside inline spans expanding the heading from 202px to 330px during reveal; the containing inline blocks keep it at 202px while retaining the animation.
+
+Production Lighthouse after the scroll and hero fixes measured 100 desktop (LCP 633ms, CLS 0, TBT 0ms) and 90 mobile (LCP 3.48s, CLS 0, TBT 15ms). A subsequent mobile interaction check caught an artwork grid-row specificity conflict; the mobile override now matches the original selector specificity, and the fourth project opens successfully at 390px. Lighthouse measures cold loading separately from the reproduced year-jump improvement.

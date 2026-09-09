@@ -3262,7 +3262,7 @@ body:before {
   .feature .pill-button {
     grid-column: 1;
   }
-  .feature-art {
+  .feature .feature-art {
     grid-row: 2;
     aspect-ratio: 1.6;
   }
